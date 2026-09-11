@@ -1,3 +1,4 @@
+import { withBase } from "@/lib/withBase";
 /** Chromatic Cut page: editorial runway composition with cool mineral surfaces and cobalt decisions. */
 import { Link } from "wouter";
 import { ArrowDown, ArrowUpRight, CalendarClock, Check, Clock3, Palette, Scissors, Sparkles } from "lucide-react";
@@ -22,7 +23,7 @@ export default function Home() {
           <div className="hero-notes"><span><b>4</b> specialist chairs</span><span><b>1:1</b> color consults</span><span><b>48h</b> chemical service window</span></div>
         </div>
         <div className="hero-image-wrap">
-          <img src="/images/sable-hero-editorial_4512985d.jpg" alt="A stylist finishing a dimensional color service in the Sable studio" className="hero-image" />
+          <img src={withBase("/images/sable-hero-editorial_4512985d.jpg")} alt="A stylist finishing a dimensional color service in the Sable studio" className="hero-image" />
           <div className="hero-image-caption"><span>DIMENSIONAL COLOR</span><span>01—24</span></div>
         </div>
       </section>
@@ -52,7 +53,7 @@ export default function Home() {
 
       <section className="booking-feature">
         <div className="booking-visual">
-          <img src="/images/sable-stylist-work_da71216e.jpg" alt="A Sable colorist applying a precise highlight placement" />
+          <img src={withBase("/images/sable-stylist-work_da71216e.jpg")} alt="A Sable colorist applying a precise highlight placement" />
           <div className="visual-stamp"><Palette size={18} /><span>Color<br />plans</span></div>
         </div>
         <div className="booking-copy">
@@ -69,7 +70,7 @@ export default function Home() {
       </section>
 
       <section className="membership-callout">
-        <div className="membership-image"><img src="/images/sable-tools-closeup_5145f9af.jpg" alt="Professional salon tools arranged on a stone worktable" /></div>
+        <div className="membership-image"><img src={withBase("/images/sable-tools-closeup_5145f9af.jpg")} alt="Professional salon tools arranged on a stone worktable" /></div>
         <div className="membership-copy">
           <PageEyebrow>Stay in rhythm</PageEyebrow>
           <h2>Your best hair has a <em>cadence.</em></h2>

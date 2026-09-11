@@ -1,3 +1,4 @@
+import { withBase } from "@/lib/withBase";
 /** Chromatic Cut component: an editorial runway shell with a cobalt mark and clear exits. */
 import { Link, useLocation } from "wouter";
 import { Menu, X, ArrowUpRight, Instagram, MapPin } from "lucide-react";
@@ -13,7 +14,7 @@ const nav = [
 export function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
     <Link href="/" className="brand-mark" aria-label="Sable Hair Studio home">
-      <img src="/images/sable-logo-mark_4168f6a7.png" alt="" className="brand-symbol" />
+      <img src={withBase("/images/sable-logo-mark_4168f6a7.png")} alt="" className="brand-symbol" />
       {!compact && (
         <span className="brand-type">
           SABLE <small>HAIR STUDIO</small>
