@@ -1,8 +1,9 @@
 import { withBase } from "@/lib/withBase";
 /** Chromatic Cut page: editorial runway composition with cool mineral surfaces and cobalt decisions. */
 import { Link } from "wouter";
-import { ArrowDown, ArrowUpRight, CalendarClock, Check, Clock3, Palette, Scissors, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowUpRight, CalendarClock, Check, Clock3, Palette, Scissors } from "lucide-react";
 import { PageEyebrow, SiteShell } from "@/components/SiteShell";
+import { PressStrip, RetailGrid } from "@/components/ShowcaseBits";
 import { services } from "@/lib/salon-data";
 
 const featured = [services[2], services[0], services[5]];
@@ -28,6 +29,8 @@ export default function Home() {
         </div>
       </section>
 
+      <PressStrip />
+
       <section className="service-intro" id="approach">
         <div className="section-rail" aria-hidden="true"><span>02</span></div>
         <div className="intro-statement">
@@ -42,7 +45,7 @@ export default function Home() {
 
       <section className="service-strip">
         {featured.map((service, index) => (
-          <Link key={service.id} href="/services" className="service-strip-item">
+          <Link key={service.id} href={`/services?focus=${service.id}`} className="service-strip-item">
             <span className="service-index">0{index + 1}</span>
             <div><p className="service-category">{service.category}</p><h3>{service.name}</h3></div>
             <div className="service-meta"><span>{service.duration} min</span><strong>${service.price}</strong></div>
@@ -80,11 +83,28 @@ export default function Home() {
         <div className="membership-note"><Clock3 size={18} /><span>Next visit,<br />already considered.</span></div>
       </section>
 
+      <section className="shelf-section">
+        <div className="shelf-head">
+          <div>
+            <PageEyebrow>The home shelf</PageEyebrow>
+            <h2>What we send home <em>with you.</em></h2>
+          </div>
+          <p>A short shelf of refills and finishers — the same formulas from your appointment. Save a favorite or add it to your bag for pickup.</p>
+        </div>
+        <RetailGrid compact />
+        <div style={{ marginTop: "1.6rem" }}>
+          <Link href="/services?focus=shelf-mineral-shampoo" className="text-cta">Browse the full shelf <ArrowUpRight size={16} /></Link>
+        </div>
+      </section>
+
       <section className="final-cta">
         <PageEyebrow>First time at Sable?</PageEyebrow>
         <h2>A little context makes a better <em>result.</em></h2>
         <p>New to chemical color, smoothing, or major lightening? We will begin with a dedicated consultation or patch-test step before confirming the full service.</p>
-        <Link href="/book" className="primary-cta">Start with a consultation <ArrowUpRight size={17} /></Link>
+        <div className="hero-actions">
+          <Link href="/book" className="primary-cta">Start with a consultation <ArrowUpRight size={17} /></Link>
+          <Link href="/visit" className="text-cta">Find the studio <ArrowUpRight size={16} /></Link>
+        </div>
       </section>
     </SiteShell>
   );

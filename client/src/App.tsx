@@ -3,12 +3,14 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Route, Switch, Router as WouterRouter } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { StudioProvider } from "./contexts/StudioStore";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Services from "./pages/Services";
 import Booking from "./pages/Booking";
 import Memberships from "./pages/Memberships";
 import About from "./pages/About";
+import Visit from "./pages/Visit";
 
 const routerBase = import.meta.env.BASE_URL.replace(/\/$/, "");
 
@@ -21,6 +23,7 @@ function AppRoutes() {
       <Route path={"/book"} component={Booking} />
       <Route path={"/memberships"} component={Memberships} />
       <Route path={"/about"} component={About} />
+      <Route path={"/visit"} component={Visit} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
@@ -41,8 +44,8 @@ function App() {
         // switchable
       >
         <TooltipProvider>
-          <Toaster />
-          <WouterRouter base={routerBase}><AppRoutes /></WouterRouter>
+          <Toaster position="bottom-right" richColors closeButton />
+          <WouterRouter base={routerBase}><StudioProvider><AppRoutes /></StudioProvider></WouterRouter>
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>
