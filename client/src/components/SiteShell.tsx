@@ -1,8 +1,8 @@
 import { withBase } from "@/lib/withBase";
 /** Chromatic Cut shell: editorial runway chrome with mock commerce actions. */
 import { Link, useLocation } from "wouter";
-import { ArrowUpRight, Heart, Instagram, MapPin, Menu, Search, ShoppingBag, UserRound, X } from "lucide-react";
-import { useState } from "react";
+import { ArrowUpRight, Heart, Instagram, MapPin, Menu, Search, ShoppingBag, Sparkles, UserRound, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
   DropdownMenu,
@@ -15,7 +15,10 @@ import {
 import { CartDrawer } from "@/components/CartDrawer";
 import { CommandPalette } from "@/components/CommandPalette";
 import { SavedDrawer } from "@/components/SavedDrawer";
+import { ServiceMatcher } from "@/components/ServiceMatcher";
+import { BackToTop, ScrollProgress } from "@/components/MotionChrome";
 import { isNewsletterSubscribed, markNewsletterSubscribed, useStudio } from "@/contexts/StudioStore";
+import { getStudioStatus, useMotionSystem } from "@/hooks/useScrollMotion";
 
 const nav = [
   { href: "/", label: "Studio" },
@@ -75,14 +78,49 @@ function NewsletterForm() {
   );
 }
 
+/** Live open/closed pill, computed from the studio's printed hours. */
+export function StudioStatus({ className }: { className?: string }) {
+  const status = getStudioStatus();
+  return (
+    <span className={className ? `status-pill ${className}` : "status-pill"}>
+      <span className={status.open ? "status-dot" : "status-dot closed"} aria-hidden="true" />
+      <span>
+        <b>{status.label}</b>
+        <small>{status.detail}</small>
+      </span>
+    </span>
+  );
+}
+
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
-  const { cartCount, savedCount, setCartOpen, setSavedOpen, setPaletteOpen } = useStudio();
+  const { cartCount, savedCount, setCartOpen, setSavedOpen, setPaletteOpen, matcherOpen, setMatcherOpen } = useStudio();
   const activePath = location.split("?")[0];
+
+  useMotionSystem();
+
+  // Hold the page still behind the mobile panel, and let Escape close it.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previous;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [menuOpen]);
+
+  // Close the panel whenever the route changes.
+  useEffect(() => setMenuOpen(false), [activePath]);
 
   return (
     <div className="min-h-screen bg-[#f5f8fb] text-[#172133]">
+      <ScrollProgress />
       <header className="site-header">
         <div className="studio-rail" aria-hidden="true">
           <span>SEATTLE, WA</span>
@@ -101,6 +139,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               <Search size={16} />
               <span className="search-pill-text">Search</span>
               <kbd className="search-kbd">⌘K</kbd>
+            </button>
+            <button className="header-icon-btn" onClick={() => setMatcherOpen(true)} aria-label="Find your service">
+              <Sparkles size={17} />
             </button>
             <button className="header-icon-btn" onClick={() => setSavedOpen(true)} aria-label={`Open saved (${savedCount})`}>
               <Heart size={18} />
@@ -143,11 +184,27 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         </div>
         {menuOpen && (
           <nav className="mobile-nav" aria-label="Mobile navigation">
-            {nav.map((item) => (
-              <Link key={item.href} href={item.href} className="mobile-nav-link" onClick={() => setMenuOpen(false)}>
+            {nav.map((item, index) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={activePath === item.href ? "mobile-nav-link active" : "mobile-nav-link"}
+                data-reveal="fade"
+                style={{ "--rd": `${index * 35}ms` } as React.CSSProperties}
+                onClick={() => setMenuOpen(false)}
+              >
                 {item.label}
+                <ArrowUpRight size={15} aria-hidden="true" />
               </Link>
             ))}
+            <button
+              className="mobile-chrome-btn mobile-match-btn"
+              data-reveal="fade"
+              style={{ "--rd": "210ms" } as React.CSSProperties}
+              onClick={() => { setMenuOpen(false); setMatcherOpen(true); }}
+            >
+              <Sparkles size={16} /> Find your service
+            </button>
             <div className="mobile-chrome-row">
               <button className="mobile-chrome-btn" onClick={() => { setMenuOpen(false); setPaletteOpen(true); }}>
                 <Search size={16} /> Search
@@ -172,6 +229,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <div>
             <BrandMark />
             <p className="footer-intro">Thoughtful cuts, lived-in color, and the kind of appointment plan that respects your calendar.</p>
+            <StudioStatus className="footer-status" />
             <div className="newsletter-block">
               <p className="footer-label">The Sable note — monthly</p>
               <NewsletterForm />
@@ -192,7 +250,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             <p className="footer-label">Say hello</p>
             <a href="mailto:hello@sablestudio.example">hello@sablestudio.example</a>
             <a href="https://instagram.com" target="_blank" rel="noreferrer"><Instagram size={15} /> @sablehairstudio</a>
-            <Link href="/services">Services & timing</Link>
+            <button className="footer-match-link" onClick={() => setMatcherOpen(true)}>
+              <Sparkles size={13} /> Find your service
+            </button>
           </div>
         </div>
         <div className="footer-bottom"><span>© 2026 Sable Hair Studio</span><span>Cut with intention. Book with clarity.</span></div>
@@ -200,6 +260,8 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <CommandPalette />
       <CartDrawer />
       <SavedDrawer />
+      <ServiceMatcher open={matcherOpen} onOpenChange={setMatcherOpen} />
+      <BackToTop />
     </div>
   );
 }

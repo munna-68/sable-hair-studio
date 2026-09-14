@@ -44,7 +44,9 @@ function App() {
         // switchable
       >
         <TooltipProvider>
-          <Toaster position="bottom-right" richColors closeButton />
+          {/* Top-right: on small screens the booking action dock and the
+              back-to-top button both live at the bottom edge. */}
+          <Toaster position="top-right" richColors closeButton />
           <WouterRouter base={routerBase}><StudioProvider><AppRoutes /></StudioProvider></WouterRouter>
         </TooltipProvider>
       </ThemeProvider>

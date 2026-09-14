@@ -91,6 +91,8 @@ type StudioStore = {
   setSavedOpen: (open: boolean) => void;
   paletteOpen: boolean;
   setPaletteOpen: (open: boolean) => void;
+  matcherOpen: boolean;
+  setMatcherOpen: (open: boolean) => void;
 };
 
 const StudioContext = createContext<StudioStore | null>(null);
@@ -114,6 +116,7 @@ export function StudioProvider({ children }: { children: React.ReactNode }) {
   const [cartOpen, setCartOpen] = useState(false);
   const [savedOpen, setSavedOpen] = useState(false);
   const [paletteOpen, setPaletteOpen] = useState(false);
+  const [matcherOpen, setMatcherOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -247,6 +250,8 @@ export function StudioProvider({ children }: { children: React.ReactNode }) {
     setSavedOpen,
     paletteOpen,
     setPaletteOpen,
+    matcherOpen,
+    setMatcherOpen,
   };
 
   return <StudioContext.Provider value={value}>{children}</StudioContext.Provider>;

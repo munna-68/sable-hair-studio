@@ -14,7 +14,7 @@ const categories = ["All", "Cut", "Color", "Care", "Grooming"] as const;
 export default function Services() {
   const [, setLocation] = useLocation();
   const focusId = new URLSearchParams(window.location.search).get("focus") ?? "";
-  const { addToBag, toggleSavedService, isSavedService } = useStudio();
+  const { addToBag, toggleSavedService, isSavedService, setMatcherOpen } = useStudio();
   const [category, setCategory] = useState<(typeof categories)[number]>("All");
   const [query, setQuery] = useState("");
   const [quickView, setQuickView] = useState<Service | null>(() => services.find((s) => s.id === focusId) ?? null);
@@ -53,8 +53,13 @@ export default function Services() {
     <SiteShell>
       <section className="page-hero services-hero">
         <div className="page-rail" aria-hidden="true"><span>03 / SERVICES</span></div>
-        <div><PageEyebrow>The work, clearly explained</PageEyebrow><h1>Plan for the <em>finish.</em><br />Stay for the detail.</h1></div>
-        <p>Every service includes the information that affects your day: realistic time in chair, price, who does it, and any booking considerations.</p>
+        <div data-reveal="left"><PageEyebrow>The work, clearly explained</PageEyebrow><h1>Plan for the <em>finish.</em><br />Stay for the detail.</h1></div>
+        <div data-reveal="right" style={{ "--rd": "90ms" } as React.CSSProperties}>
+          <p>Every service includes the information that affects your day: realistic time in chair, price, who does it, and any booking considerations.</p>
+          <button className="primary-cta matcher-trigger" onClick={() => setMatcherOpen(true)}>
+            Not sure? Answer three questions <Sparkles size={16} />
+          </button>
+        </div>
       </section>
 
       <div className="filter-bar" role="search">
@@ -89,7 +94,12 @@ export default function Services() {
           const deposit = getDepositAmount(service);
           const saved = isSavedService(service.id);
           return (
-            <article className="service-row" key={service.id}>
+            <article
+              className="service-row"
+              key={service.id}
+              data-reveal="up"
+              style={{ "--rd": `${Math.min(index, 4) * 70}ms` } as React.CSSProperties}
+            >
               <div className="service-row-index">{String(index + 1).padStart(2, "0")}</div>
               <div className="service-row-main">
                 <div className="service-row-heading">
@@ -111,7 +121,7 @@ export default function Services() {
               <div className="row-cta-group">
                 <Link href={`/book?service=${service.id}`} className="row-book" aria-label={`Book ${service.name}`}><span>Book</span><ArrowUpRight size={18} /></Link>
                 <div className="row-actions">
-                  <button className={saved ? "icon-btn saved" : "icon-btn"} aria-label={saved ? `Unsave ${service.name}` : `Save ${service.name}`} onClick={() => toggleSavedService(service.id, service.name)}>
+                  <button className={saved ? "icon-btn saved" : "icon-btn"} aria-label={saved ? `Unsave ${service.name}` : `Save ${service.name}`} aria-pressed={saved} onClick={() => toggleSavedService(service.id, service.name)}>
                     <Heart size={15} fill={saved ? "currentColor" : "none"} />
                   </button>
                   <button className="icon-btn" aria-label={`Share ${service.name}`} onClick={() => shareLink(service.name, service.description)}>
@@ -129,7 +139,7 @@ export default function Services() {
           );
         })}
         {!filtered.length && (
-          <div className="service-row">
+          <div className="service-row" data-reveal="fade">
             <div className="service-row-index">—</div>
             <div className="service-row-main">
               <h2>No services match “{query}”.</h2>
@@ -144,18 +154,24 @@ export default function Services() {
 
       <section className="shelf-section">
         <div className="shelf-head">
-          <div>
+          <div data-reveal="left">
             <PageEyebrow>Take-home shelf</PageEyebrow>
             <h2>Extend the result <em>beyond the chair.</em></h2>
           </div>
-          <p>The same care we use in-studio, sized for home. Add to your bag for studio pickup — demo checkout, no card.</p>
+          <p data-reveal="right" style={{ "--rd": "80ms" } as React.CSSProperties}>
+            The same care we use in-studio, sized for home. Add to your bag for studio pickup — demo checkout, no card.
+          </p>
         </div>
         <RetailGrid />
       </section>
 
       <section className="policy-panel">
-        <div><PageEyebrow>Before you book</PageEyebrow><h2>Good work needs a protected <em>window.</em></h2></div>
-        <div className="policy-cards"><div><span>01</span><h3>Color + chemical work</h3><p>First-time guests complete a brief consultation or patch test before we confirm the service appointment.</p></div><div><span>02</span><h3>Deposits, scaled fairly</h3><p>Basic cuts stay deposit-free. Longer color, smoothing, and correction work reserve time with a service-specific deposit.</p></div><div><span>03</span><h3>Changes with enough notice</h3><p>Your exact cancellation window appears before confirmation. Changes outside that window can move your deposit forward.</p></div></div>
+        <div data-reveal="left"><PageEyebrow>Before you book</PageEyebrow><h2>Good work needs a protected <em>window.</em></h2></div>
+        <div className="policy-cards">
+          <div data-reveal="up" style={{ "--rd": "0ms" } as React.CSSProperties}><span>01</span><h3>Color + chemical work</h3><p>First-time guests complete a brief consultation or patch test before we confirm the service appointment.</p></div>
+          <div data-reveal="up" style={{ "--rd": "90ms" } as React.CSSProperties}><span>02</span><h3>Deposits, scaled fairly</h3><p>Basic cuts stay deposit-free. Longer color, smoothing, and correction work reserve time with a service-specific deposit.</p></div>
+          <div data-reveal="up" style={{ "--rd": "180ms" } as React.CSSProperties}><span>03</span><h3>Changes with enough notice</h3><p>Your exact cancellation window appears before confirmation. Changes outside that window can move your deposit forward.</p></div>
+        </div>
       </section>
 
       <ServiceQuickView

@@ -20,11 +20,16 @@ export default function Memberships() {
 
   return (
     <SiteShell>
-      <section className="page-hero membership-hero"><div className="page-rail" aria-hidden="true"><span>05 / MEMBERS</span></div><div><PageEyebrow>Care, already accounted for</PageEyebrow><h1>Good hair is less a <em>moment</em><br />than a rhythm.</h1></div><p>Choose a plan that matches how you maintain your cut, color, or finish. Your next visit is generated the moment you join.</p></section>
-      {selectedPlan && <section className="active-plan-banner"><div className="active-plan-icon"><CalendarCheck2 size={22} /></div><div><p className="service-category">Your membership is active</p><h2>{selectedPlan.name}</h2><p>Your next auto-scheduled visit: <b>{getNextMembershipDate(selectedPlan.intervalDays)}</b></p></div><button className="pause-button" onClick={() => setActivePlan(null)}><PauseCircle size={16} /> Pause plan</button></section>}
+      <section className="page-hero membership-hero"><div className="page-rail" aria-hidden="true"><span>05 / MEMBERS</span></div><div data-reveal="left"><PageEyebrow>Care, already accounted for</PageEyebrow><h1>Good hair is less a <em>moment</em><br />than a rhythm.</h1></div><p data-reveal="right" style={{ "--rd": "90ms" } as React.CSSProperties}>Choose a plan that matches how you maintain your cut, color, or finish. Your next visit is generated the moment you join.</p></section>
+      {selectedPlan && <section className="active-plan-banner" data-reveal="scale"><div className="active-plan-icon"><CalendarCheck2 size={22} /></div><div><p className="service-category">Your membership is active</p><h2>{selectedPlan.name}</h2><p>Your next auto-scheduled visit: <b>{getNextMembershipDate(selectedPlan.intervalDays)}</b></p></div><button className="pause-button" onClick={() => setActivePlan(null)}><PauseCircle size={16} /> Pause plan</button></section>}
       <section className="membership-grid">
         {memberships.map((plan, index) => (
-          <article className={activePlan === plan.id ? "plan-card active" : "plan-card"} key={plan.id}>
+          <article
+            className={activePlan === plan.id ? "plan-card active" : "plan-card"}
+            key={plan.id}
+            data-reveal="up"
+            style={{ "--rd": `${index * 100}ms` } as React.CSSProperties}
+          >
             <div className="plan-card-top"><span>0{index + 1}</span><Sparkles size={18} /></div>
             <p className="service-category">{plan.cadence}</p>
             <h2>{plan.name}</h2>
@@ -47,8 +52,8 @@ export default function Memberships() {
           </article>
         ))}
       </section>
-      <section className="membership-faq"><div><PageEyebrow>Good to know</PageEyebrow><h2>Flexible by design. <em>Specific</em> when it counts.</h2></div><div className="faq-list"><div><h3>Can I change my visit time?</h3><p>Yes. Your membership creates a preferred booking hold, then you can choose another compatible opening if your week changes.</p></div><div><h3>What if I need a bigger appointment?</h3><p>Your recurring visit becomes the foundation. Add-ons and larger color work are always priced and timed separately before you confirm.</p></div><div><h3>Can I pause?</h3><p>Absolutely. Plans are intended to support your routine, not lock you into a schedule that no longer fits it.</p></div></div></section>
-      <section className="mini-cta"><p>Not ready for a rhythm yet?</p><Link href="/book" className="text-cta">Book one considered visit <ArrowUpRight size={16} /></Link></section>
+      <section className="membership-faq"><div data-reveal="left"><PageEyebrow>Good to know</PageEyebrow><h2>Flexible by design. <em>Specific</em> when it counts.</h2></div><div className="faq-list"><div data-reveal="up" style={{ "--rd": "0ms" } as React.CSSProperties}><h3>Can I change my visit time?</h3><p>Yes. Your membership creates a preferred booking hold, then you can choose another compatible opening if your week changes.</p></div><div data-reveal="up" style={{ "--rd": "90ms" } as React.CSSProperties}><h3>What if I need a bigger appointment?</h3><p>Your recurring visit becomes the foundation. Add-ons and larger color work are always priced and timed separately before you confirm.</p></div><div data-reveal="up" style={{ "--rd": "180ms" } as React.CSSProperties}><h3>Can I pause?</h3><p>Absolutely. Plans are intended to support your routine, not lock you into a schedule that no longer fits it.</p></div></div></section>
+      <section className="mini-cta" data-reveal="fade"><p>Not ready for a rhythm yet?</p><Link href="/book" className="text-cta">Book one considered visit <ArrowUpRight size={16} /></Link></section>
     </SiteShell>
   );
 }

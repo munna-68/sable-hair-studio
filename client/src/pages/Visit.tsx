@@ -1,15 +1,21 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Link } from "wouter";
-import { ArrowUpRight, Check, Copy, MapPin, Navigation, Phone } from "lucide-react";
+import { ArrowUpRight, Check, Copy, MapPin, Navigation, Phone, Route } from "lucide-react";
 import { toast } from "sonner";
-import { MapView } from "@/components/Map";
-import { PageEyebrow, SiteShell } from "@/components/SiteShell";
+import { StudioMap } from "@/components/StudioMap";
+import { PageEyebrow, SiteShell, StudioStatus } from "@/components/SiteShell";
+import { getStudioStatus } from "@/hooks/useScrollMotion";
 
 const ADDRESS = "118 Pine Street, Seattle, WA 98101";
 const MAPS_URL = "https://maps.google.com/?q=118+Pine+Street+Seattle+WA";
 const PHONE_DISPLAY = "(206) 555-0198";
 const PHONE_HREF = "tel:+12065550198";
-const STUDIO_POS = { lat: 47.6119, lng: -122.3378 };
+const DIRECTIONS = [
+  "Sable Hair Studio — 118 Pine Street, Seattle, WA 98101",
+  "Light rail: Westlake Station, then a 6 minute walk up Pine.",
+  "Driving: street parking on Pine is free after 6pm; paid garages on 2nd Ave.",
+  "Look for the cobalt stroke on the glass at street level.",
+].join("\n");
 
 type FormState = { name: string; email: string; topic: string; message: string };
 const initial: FormState = { name: "", email: "", topic: "Booking help", message: "" };
@@ -19,42 +25,31 @@ export default function Visit() {
   const [errors, setErrors] = useState<Partial<FormState>>({});
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
-  const mapRef = useRef<google.maps.Map | null>(null);
+  const status = getStudioStatus();
 
   function set<K extends keyof FormState>(key: K, value: string) {
     setForm((f) => ({ ...f, [key]: value }));
     setErrors((e) => ({ ...e, [key]: undefined }));
   }
 
-  function copyAddress() {
-    navigator.clipboard
-      ?.writeText(ADDRESS)
-      .then(() => toast.success("Address copied.", { description: ADDRESS }))
-      .catch(() => toast.info("Copy this address.", { description: ADDRESS }));
-  }
-
-  function copyPhone() {
-    navigator.clipboard
-      ?.writeText(PHONE_DISPLAY)
-      .then(() => toast.success("Phone number copied.", { description: PHONE_DISPLAY }))
-      .catch(() => toast.info("Call us at.", { description: PHONE_DISPLAY }));
-  }
-
-  function recenter() {
-    if (mapRef.current) {
-      mapRef.current.setCenter(STUDIO_POS);
-      mapRef.current.setZoom(16);
-      toast.success("Map centered on the studio.", { description: ADDRESS });
-    } else {
-      toast.info("Map is still loading.", { description: "Try again in a moment." });
+  async function copy(text: string, message: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast.success(message);
+    } catch {
+      toast.info("Copy this instead.", { description: text });
     }
   }
+
+  const copyAddress = () => copy(ADDRESS, "Address copied.");
+  const copyPhone = () => copy(PHONE_DISPLAY, "Phone number copied.");
+  const copyDirections = () => copy(DIRECTIONS, "Directions copied.");
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
     const next: Partial<FormState> = {};
     if (form.name.trim().length < 2) next.name = "Tell us your name.";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.message && form.email.trim())) next.email = "Enter a valid email.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) next.email = "Enter a valid email.";
     if (form.message.trim().length < 10) next.message = "Add a little detail (10+ characters).";
     setErrors(next);
     if (Object.keys(next).length) {
@@ -75,17 +70,20 @@ export default function Visit() {
     <SiteShell>
       <section className="page-hero">
         <div className="page-rail" aria-hidden="true"><span>06 / VISIT</span></div>
-        <div>
+        <div data-reveal="left">
           <PageEyebrow>Come by the studio</PageEyebrow>
           <h1>Find a little <em>time for you.</em></h1>
         </div>
-        <p>Downtown Seattle, two blocks from the market. Walk-ins for retail — appointments for the chair.</p>
+        <div data-reveal="right" style={{ "--rd": "90ms" } as React.CSSProperties}>
+          <p>Downtown Seattle, two blocks from the market. Walk-ins for retail — appointments for the chair.</p>
+          <StudioStatus className="page-status" />
+        </div>
       </section>
 
       <section className="visit-layout">
         <div>
           <div className="visit-cards">
-            <div className="visit-card">
+            <div className="visit-card" data-reveal="up">
               <span><MapPin size={18} /></span>
               <span><b>{ADDRESS}</b><small>Tue–Fri 9–6 · Sat–Sun 10–5 · Closed Mon</small></span>
               <div className="flex gap-1.5">
@@ -93,7 +91,7 @@ export default function Visit() {
                 <a className="mini-book" href={MAPS_URL} target="_blank" rel="noreferrer">Open in Maps <ArrowUpRight size={13} /></a>
               </div>
             </div>
-            <div className="visit-card">
+            <div className="visit-card" data-reveal="up" style={{ "--rd": "80ms" } as React.CSSProperties}>
               <span><Phone size={18} /></span>
               <span><b>{PHONE_DISPLAY}</b><small>Demo line — tapping calls in a real browser</small></span>
               <div className="flex gap-1.5">
@@ -107,14 +105,14 @@ export default function Visit() {
                 </a>
               </div>
             </div>
-            <div className="visit-card">
+            <div className="visit-card" data-reveal="up" style={{ "--rd": "160ms" } as React.CSSProperties}>
               <span><Navigation size={18} /></span>
               <span><b>Getting here</b><small>Light rail to Westlake · Street parking on Pine after 6</small></span>
-              <button className="mini-ghost" onClick={recenter}>Center map</button>
+              <button className="mini-ghost" onClick={copyDirections}><Route size={13} /> Directions</button>
             </div>
           </div>
 
-          <form className="visit-form" onSubmit={submit} noValidate>
+          <form className="visit-form" onSubmit={submit} noValidate data-reveal="up">
             {sent ? (
               <div className="bag-confirm">
                 <p className="service-category">Message saved</p>
@@ -166,66 +164,19 @@ export default function Visit() {
         </div>
 
         <div className="visit-map">
-          <div className="visit-map-frame">
-            <MapFallbackWrap mapRef={mapRef} />
+          <div className="visit-map-frame map-frame" data-reveal="scale">
+            <StudioMap />
           </div>
-          <div className="visit-card">
+          <div className="visit-card" data-reveal="up">
             <span><Check size={18} /></span>
-            <span><b>Look for the cobalt mark</b><small>Street-level studio with the angled blue stroke on glass</small></span>
+            <span>
+              <b>{status.open ? "We’re open right now" : "Closed at the moment"}</b>
+              <small>{status.label} · Look for the cobalt stroke on the glass</small>
+            </span>
             <Link href="/book" className="mini-book">Book <ArrowUpRight size={13} /></Link>
           </div>
         </div>
       </section>
     </SiteShell>
   );
-}
-
-function MapFallbackWrap({ mapRef }: { mapRef: React.MutableRefObject<google.maps.Map | null> }) {
-  const [failed, setFailed] = useState(false);
-
-  if (failed) {
-    return (
-      <div className="map-fallback">
-        <MapPin size={26} className="mx-auto text-[#2a5bff]" />
-        <b>{ADDRESS}</b>
-        <span>Live map unavailable offline — open it in Google Maps instead.</span>
-        <a className="mini-book mx-auto" href={MAPS_URL} target="_blank" rel="noreferrer">
-          Open in Maps <ArrowUpRight size={13} />
-        </a>
-      </div>
-    );
-  }
-
-  return (
-    <MapErrorBoundary onError={() => setFailed(true)}>
-      <MapView
-        className="h-[380px] w-full"
-        initialCenter={STUDIO_POS}
-        initialZoom={16}
-        onMapReady={(map) => {
-          mapRef.current = map;
-          try {
-            new window.google.maps.marker.AdvancedMarkerElement({
-              map,
-              position: STUDIO_POS,
-              title: "Sable Hair Studio — 118 Pine St",
-            });
-          } catch {
-            new window.google.maps.Marker({ map, position: STUDIO_POS, title: "Sable Hair Studio" });
-          }
-        }}
-      />
-    </MapErrorBoundary>
-  );
-}
-
-import { Component, type ReactNode } from "react";
-
-class MapErrorBoundary extends Component<{ children: ReactNode; onError: () => void }> {
-  componentDidCatch() {
-    this.props.onError();
-  }
-  render() {
-    return this.props.children;
-  }
 }
