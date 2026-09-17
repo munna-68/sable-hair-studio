@@ -30,7 +30,7 @@ export function ServiceQuickView({ service, onClose, onPrev, onNext }: {
 
   return (
     <Dialog open={open} onOpenChange={(v) => { if (!v) onClose(); }}>
-      <DialogContent className="sm:max-w-2xl p-0 overflow-hidden gap-0 border-[#dbe2ea]">
+      <DialogContent className="sm:max-w-2xl p-0 overflow-hidden gap-0 border-[#DCE3D6]">
         {service && (
           <div className="quickview">
             <div className="quickview-top">
@@ -46,7 +46,7 @@ export function ServiceQuickView({ service, onClose, onPrev, onNext }: {
             </div>
             <DialogHeader className="text-left px-6 pt-1">
               <DialogTitle className="font-display text-3xl tracking-tight">{service.name}</DialogTitle>
-              <DialogDescription className="text-[14px] leading-relaxed text-[#59697c]">{service.description}</DialogDescription>
+              <DialogDescription className="text-[14px] leading-relaxed text-[#38443B]">{service.description}</DialogDescription>
             </DialogHeader>
             <p className="quickview-story">{stories[service.id] ?? service.description}</p>
             <div className="quickview-meta">

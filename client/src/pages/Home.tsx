@@ -1,5 +1,5 @@
 import { withBase } from "@/lib/withBase";
-/** Chromatic Cut page: editorial runway composition with cool mineral surfaces and cobalt decisions. */
+/** Chromatic Cut page: editorial runway composition with mineral surfaces and emerald decisions. */
 import { Link } from "wouter";
 import { ArrowUpRight, CalendarClock, Check, Clock3, Palette, Scissors, Sparkles } from "lucide-react";
 import { PageEyebrow, SiteShell } from "@/components/SiteShell";

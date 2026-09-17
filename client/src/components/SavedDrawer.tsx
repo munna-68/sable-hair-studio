@@ -14,14 +14,14 @@ export function SavedDrawer() {
       <SheetContent side="right" className="w-full sm:max-w-md gap-0 p-0 overflow-hidden flex flex-col">
         <SheetHeader className="p-5 pb-4 border-b text-left">
           <SheetTitle className="font-display flex items-center gap-2 text-lg tracking-tight">
-            <Heart size={19} className="text-[#2a5bff]" /> Saved
+            <Heart size={19} className="text-[#147A45]" /> Saved
           </SheetTitle>
           <SheetDescription>Services, chairs, and shelf picks you hearted — kept on this device.</SheetDescription>
         </SheetHeader>
         <div className="flex-1 overflow-y-auto p-5 grid gap-5 content-start">
           {empty && (
             <div className="bag-empty">
-              <Heart size={30} className="text-[#8fa0b5]" />
+              <Heart size={30} className="text-[#66756A]" />
               <b>Nothing saved yet.</b>
               <p>Tap the heart on any service, stylist, or take-home product and it will wait for you here.</p>
               <Link href="/services" className="primary-cta !py-2.5" onClick={() => setSavedOpen(false)}>

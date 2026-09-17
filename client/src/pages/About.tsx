@@ -104,7 +104,7 @@ export default function About() {
               <div className="stylist-dialog-meta">
                 {focus.specialties.map((s) => <span key={s} className="stylist-chip">{s}</span>)}
               </div>
-              <p className="text-[13px] leading-relaxed text-[#536377]">
+              <p className="text-[13px] leading-relaxed text-[#38443B]">
                 {focus.id === "mara" && "Mara leads color direction — expect a frank grow-out plan and a gloss sequence mapped before lightener touches hair."}
                 {focus.id === "noa" && "Noa cuts with the calendar in mind: shapes that hold their line at week six, not just day one."}
                 {focus.id === "sofia" && "Sofia pairs texture expertise with health-first smoothing — she will talk you out of work your hair can't support."}

@@ -119,7 +119,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   useEffect(() => setMenuOpen(false), [activePath]);
 
   return (
-    <div className="min-h-screen bg-[#f5f8fb] text-[#172133]">
+    <div className="min-h-screen bg-[#F5F8F4] text-[#0A1F14]">
       <ScrollProgress />
       <header className="site-header">
         <div className="studio-rail" aria-hidden="true">

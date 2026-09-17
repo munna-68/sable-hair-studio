@@ -176,7 +176,7 @@ export function ServiceMatcher({ open, onOpenChange }: { open: boolean; onOpenCh
         if (!next) window.setTimeout(reset, 220);
       }}
     >
-      <DialogContent className="sm:max-w-xl p-0 gap-0 overflow-hidden border-[#dbe2ea]">
+      <DialogContent className="sm:max-w-xl p-0 gap-0 overflow-hidden border-[#DCE3D6]">
         <div className="matcher">
           <header className="matcher-head">
             <div>

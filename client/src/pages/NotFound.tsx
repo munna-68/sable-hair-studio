@@ -36,7 +36,7 @@ export default function NotFound() {
           <nav>
             {shortcuts.map((s) => (
               <Link key={s.href} href={s.href}>
-                <span>{s.label} <small className="block text-[11px] font-normal text-[#66758a]">{s.hint}</small></span>
+                <span>{s.label} <small className="block text-[11px] font-normal text-[#4E5B51]">{s.hint}</small></span>
                 <ArrowRight size={16} />
               </Link>
             ))}

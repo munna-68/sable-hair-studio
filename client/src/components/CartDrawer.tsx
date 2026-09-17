@@ -29,7 +29,7 @@ export function CartDrawer() {
       <SheetContent side="right" className="w-full sm:max-w-md gap-0 p-0 overflow-hidden flex flex-col">
         <SheetHeader className="p-5 pb-4 border-b text-left">
           <SheetTitle className="font-display flex items-center gap-2 text-lg tracking-tight">
-            <ShoppingBag size={19} className="text-[#2a5bff]" /> Your bag
+            <ShoppingBag size={19} className="text-[#147A45]" /> Your bag
             {cartCount > 0 && <span className="bag-count">{cartCount}</span>}
           </SheetTitle>
           <SheetDescription>Services, plans, and take-home care — held locally for this demo.</SheetDescription>
@@ -46,7 +46,7 @@ export function CartDrawer() {
           )}
           {!resolvedCart.length && !orderDone && (
             <div className="bag-empty">
-              <ShoppingBag size={30} className="text-[#8fa0b5]" />
+              <ShoppingBag size={30} className="text-[#66756A]" />
               <b>Your bag is empty.</b>
               <p>Add a service to hold pricing, a membership to start a rhythm, or take-home care to extend the result.</p>
               <div className="flex gap-2 flex-wrap">

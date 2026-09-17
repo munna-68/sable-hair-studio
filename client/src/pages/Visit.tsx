@@ -14,7 +14,7 @@ const DIRECTIONS = [
   "Sable Hair Studio — 118 Pine Street, Seattle, WA 98101",
   "Light rail: Westlake Station, then a 6 minute walk up Pine.",
   "Driving: street parking on Pine is free after 6pm; paid garages on 2nd Ave.",
-  "Look for the cobalt stroke on the glass at street level.",
+  "Look for the emerald stroke on the glass at street level.",
 ].join("\n");
 
 type FormState = { name: string; email: string; topic: string; message: string };
@@ -157,7 +157,7 @@ export default function Visit() {
                 <button className="primary-cta w-full !py-3" type="submit" disabled={sending}>
                   {sending ? "Saving demo message…" : "Send message"} <ArrowUpRight size={16} />
                 </button>
-                <small className="text-[#68778a] text-[11px]">Demo only — validated locally, confirmed with a toast.</small>
+                <small className="text-[#4E5B51] text-[11px]">Demo only — validated locally, confirmed with a toast.</small>
               </>
             )}
           </form>
@@ -171,7 +171,7 @@ export default function Visit() {
             <span><Check size={18} /></span>
             <span>
               <b>{status.open ? "We’re open right now" : "Closed at the moment"}</b>
-              <small>{status.label} · Look for the cobalt stroke on the glass</small>
+              <small>{status.label} · Look for the emerald stroke on the glass</small>
             </span>
             <Link href="/book" className="mini-book">Book <ArrowUpRight size={13} /></Link>
           </div>

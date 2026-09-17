@@ -65,7 +65,7 @@ export default function Services() {
       <div className="filter-bar" role="search">
         <div className="filter-inner">
           <label className="filter-search">
-            <Search size={15} className="text-[#66758a]" />
+            <Search size={15} className="text-[#4E5B51]" />
             <input
               placeholder="Filter services — try “color” or “cut”"
               value={query}

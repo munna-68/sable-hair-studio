@@ -1,0 +1,400 @@
+{
+  "breakpoints": [
+    {
+      "name": "sm",
+      "value": "640px"
+    },
+    {
+      "name": "md",
+      "value": "900px"
+    },
+    {
+      "name": "lg",
+      "value": "1150px"
+    },
+    {
+      "name": "xl",
+      "value": "1440px"
+    }
+  ],
+  "components": [
+    {
+      "css": ".ds-btn-primary { background: #0A1F14; color: #F5F8F4; padding: 14px 20px; border: none; border-radius: 999px; font-family: Manrope, system-ui, sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.01em; cursor: pointer; transition: background 0.16s ease, transform 0.16s cubic-bezier(0.23,1,0.32,1); } .ds-btn-primary:hover { background: #147A45; transform: translateY(-2px); } .ds-btn-primary:active { transform: scale(0.97); } .ds-btn-primary:focus-visible { outline: 3px solid #147A45; outline-offset: 3px; }",
+      "description": "Primary booking and commitment action. Pine ground, stone text.",
+      "html": "<button class=\"ds-btn-primary\">Book a visit</button>",
+      "kind": "button",
+      "name": "Primary Button",
+      "refersTo": "button-primary"
+    },
+    {
+      "css": ".ds-btn-ghost { background: transparent; color: #0A1F14; padding: 13px 18px; border: 1px solid #DCE3D6; border-radius: 999px; font-family: Manrope, system-ui, sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: border-color 0.16s ease, color 0.16s ease; } .ds-btn-ghost:hover { border-color: #147A45; color: #147A45; } .ds-btn-ghost:focus-visible { outline: 3px solid #147A45; outline-offset: 3px; }",
+      "description": "Secondary action. Hairline frame, pine ink text, fern on hover.",
+      "html": "<button class=\"ds-btn-ghost\">View services</button>",
+      "kind": "button",
+      "name": "Ghost Button",
+      "refersTo": "button-ghost"
+    },
+    {
+      "css": ".ds-input { background: #FCFDFB; color: #0A1F14; border: 1px solid #DCE3D6; border-radius: 16px; padding: 11px 13px; font-family: Manrope, system-ui, sans-serif; font-size: 13px; width: 240px; } .ds-input:focus { outline: 2px solid #147A45; outline-offset: 1px; background: #FCFDFB; } .ds-input::placeholder { color: #4E5B51; }",
+      "description": "Text field at rest on paper with hairline stroke and fern focus.",
+      "html": "<input class=\"ds-input\" placeholder=\"you@example.com\" />",
+      "kind": "input",
+      "name": "Text Input",
+      "refersTo": "input-field"
+    },
+    {
+      "css": ".ds-chip { background: #F5F8F4; color: #4E5B51; border: 1px solid #DCE3D6; border-radius: 999px; padding: 9px 12px; font-family: Manrope, system-ui, sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; } .ds-chip[aria-pressed=\"true\"] { background: #D8EEDD; color: #0A1F14; border-color: #147A45; } .ds-chip:hover { border-color: #147A45; color: #147A45; }",
+      "description": "Filter and option chip. Selected pairs fern wash with pine ink text.",
+      "html": "<button class=\"ds-chip\" aria-pressed=\"true\">Color</button>",
+      "kind": "chip",
+      "name": "Filter Chip",
+      "refersTo": "chip-selected"
+    },
+    {
+      "css": ".ds-nav { display: flex; gap: 26px; background: #F5F8F4; padding: 12px 4px; } .ds-nav a { color: #4E5B51; text-decoration: none; font-family: Manrope, system-ui, sans-serif; font-size: 13px; font-weight: 600; padding-bottom: 5px; } .ds-nav a:hover { color: #0A1F14; } .ds-nav a[aria-current=\"page\"] { color: #0A1F14; border-bottom: 2px solid #147A45; }",
+      "description": "Primary nav. Sage taupe at rest, ink on hover, fern marker when active.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\">Studio</a><a href=\"#\" aria-current=\"page\">Services</a><a href=\"#\">Visit</a></nav>",
+      "kind": "nav",
+      "name": "Primary Nav",
+      "refersTo": "nav-link-active"
+    },
+    {
+      "css": ".ds-card { background: #FCFDFB; border: 1px solid #DCE3D6; border-radius: 20px; padding: 24px; max-width: 320px; transition: transform 0.18s cubic-bezier(0.23,1,0.32,1); } .ds-card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -18px rgba(10,31,20,0.45); } .ds-card h3 { margin: 0 0 8px; font-family: Manrope, system-ui, sans-serif; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; color: #0A1F14; } .ds-card p { margin: 0; font-family: Manrope, system-ui, sans-serif; font-size: 13px; line-height: 1.6; color: #4E5B51; }",
+      "description": "Retail and info card. Fog ground, hairline frame, flat at rest.",
+      "html": "<div class=\"ds-card\"><h3>Take-home ritual</h3><p>Chosen with your stylist, sized for the weeks between visits.</p></div>",
+      "kind": "card",
+      "name": "Info Card",
+      "refersTo": "button-ghost"
+    },
+    {
+      "css": ".ds-summary { background: #0A1F14; color: #F5F8F4; padding: 26px; border-radius: 20px; max-width: 330px; } .ds-summary small { display: block; font-family: Manrope, system-ui, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #C2CBB2; margin-bottom: 12px; } .ds-summary b { font-family: Marcellus, Georgia, serif; font-size: 25px; font-weight: 400; letter-spacing: -0.015em; } .ds-summary p { font-family: Manrope, system-ui, sans-serif; font-size: 12px; line-height: 1.6; color: #C2CBB2; border-top: 1px solid #4A3E33; padding-top: 12px; margin-top: 12px; }",
+      "description": "Booking summary. The one cool dark anchor on the booking route.",
+      "html": "<div class=\"ds-summary\"><small>Your visit</small><b>Cut and finish</b><p>Sat, Jun 14 at 10:30 with June</p></div>",
+      "kind": "custom",
+      "name": "Booking Summary",
+      "refersTo": "button-primary"
+    }
+  ],
+  "extensions": {
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "900px"
+      },
+      {
+        "name": "lg",
+        "value": "1150px"
+      },
+      {
+        "name": "xl",
+        "value": "1440px"
+      }
+    ],
+    "colorMeta": {
+      "accent": {
+        "canonical": "oklch(53% 0.12 150)",
+        "displayName": "Deep Green",
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(22% 0.06 65)",
+          "oklch(30% 0.07 65)",
+          "oklch(38% 0.08 65)",
+          "oklch(45% 0.08 65)",
+          "oklch(58% 0.07 70)",
+          "oklch(70% 0.06 75)",
+          "oklch(82% 0.045 78)",
+          "oklch(92% 0.03 80)"
+        ]
+      },
+      "accent-soft": {
+        "canonical": "oklch(90% 0.04 145)",
+        "displayName": "Mint Wash",
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(40% 0.07 70)",
+          "oklch(52% 0.07 72)",
+          "oklch(64% 0.06 74)",
+          "oklch(74% 0.05 75)",
+          "oklch(82% 0.043 76)",
+          "oklch(89% 0.035 75)",
+          "oklch(93% 0.025 80)",
+          "oklch(96% 0.015 82)"
+        ]
+      },
+      "hairline": {
+        "canonical": "oklch(89% 0.02 135)",
+        "displayName": "Hairline Mist",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(40% 0.03 75)",
+          "oklch(52% 0.03 77)",
+          "oklch(64% 0.028 78)",
+          "oklch(74% 0.027 79)",
+          "oklch(82% 0.026 80)",
+          "oklch(87% 0.025 80)",
+          "oklch(92% 0.02 82)",
+          "oklch(96% 0.012 84)"
+        ]
+      },
+      "ink": {
+        "canonical": "oklch(22% 0.03 155)",
+        "displayName": "Pine Black",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(18% 0.015 65)",
+          "oklch(25% 0.02 65)",
+          "oklch(33% 0.025 65)",
+          "oklch(45% 0.03 65)",
+          "oklch(58% 0.025 68)",
+          "oklch(72% 0.02 72)",
+          "oklch(85% 0.015 78)",
+          "oklch(94% 0.012 82)"
+        ]
+      },
+      "muted-ink": {
+        "canonical": "oklch(50% 0.03 140)",
+        "displayName": "Sage Smoke",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(25% 0.02 65)",
+          "oklch(35% 0.022 65)",
+          "oklch(45% 0.022 65)",
+          "oklch(55% 0.02 65)",
+          "oklch(66% 0.02 68)",
+          "oklch(77% 0.018 72)",
+          "oklch(87% 0.015 78)",
+          "oklch(94% 0.012 82)"
+        ]
+      },
+      "paper": {
+        "canonical": "oklch(96% 0.008 130)",
+        "displayName": "Stone White",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(30% 0.025 70)",
+          "oklch(45% 0.025 72)",
+          "oklch(60% 0.025 75)",
+          "oklch(72% 0.024 78)",
+          "oklch(82% 0.022 80)",
+          "oklch(89% 0.018 82)",
+          "oklch(93% 0.014 84)",
+          "oklch(95% 0.012 85)"
+        ]
+      },
+      "surface": {
+        "canonical": "oklch(92% 0.015 130)",
+        "displayName": "Fog Surface",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(30% 0.025 70)",
+          "oklch(44% 0.026 72)",
+          "oklch(58% 0.026 74)",
+          "oklch(70% 0.025 76)",
+          "oklch(80% 0.024 78)",
+          "oklch(87% 0.022 79)",
+          "oklch(92% 0.02 80)",
+          "oklch(95% 0.014 83)"
+        ]
+      },
+      "surface-deep": {
+        "canonical": "oklch(22% 0.03 155)",
+        "displayName": "Footer Pine",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(30% 0.03 72)",
+          "oklch(44% 0.032 74)",
+          "oklch(58% 0.032 76)",
+          "oklch(70% 0.032 78)",
+          "oklch(80% 0.031 79)",
+          "oklch(88% 0.03 80)",
+          "oklch(92% 0.022 82)",
+          "oklch(95% 0.014 84)"
+        ]
+      },
+      "utility-clay": {
+        "canonical": "oklch(52% 0.09 35)",
+        "displayName": "Fired Clay",
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(25% 0.06 35)",
+          "oklch(34% 0.075 35)",
+          "oklch(43% 0.085 35)",
+          "oklch(52% 0.09 35)",
+          "oklch(62% 0.08 38)",
+          "oklch(73% 0.06 42)",
+          "oklch(84% 0.04 48)",
+          "oklch(93% 0.02 55)"
+        ]
+      },
+      "utility-sage": {
+        "canonical": "oklch(55% 0.05 140)",
+        "displayName": "Muted Sage",
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(25% 0.04 140)",
+          "oklch(35% 0.045 140)",
+          "oklch(45% 0.05 140)",
+          "oklch(55% 0.05 140)",
+          "oklch(66% 0.045 142)",
+          "oklch(77% 0.035 145)",
+          "oklch(87% 0.025 148)",
+          "oklch(94% 0.015 150)"
+        ]
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "Card White",
+        "canonical": "oklch(99% 0.004 130)",
+        "tonalRamp": [
+          "oklch(30% 0.025 70)",
+          "oklch(45% 0.025 72)",
+          "oklch(60% 0.025 75)",
+          "oklch(72% 0.024 78)",
+          "oklch(82% 0.022 80)",
+          "oklch(89% 0.018 82)",
+          "oklch(93% 0.014 84)",
+          "oklch(95% 0.012 85)"
+        ]
+      },
+      "accent-vivid": {
+        "role": "primary",
+        "displayName": "Vivid Leaf",
+        "canonical": "oklch(72% 0.17 150)",
+        "tonalRamp": [
+          "oklch(22% 0.06 65)",
+          "oklch(30% 0.07 65)",
+          "oklch(38% 0.08 65)",
+          "oklch(45% 0.08 65)",
+          "oklch(58% 0.07 70)",
+          "oklch(70% 0.06 75)",
+          "oklch(82% 0.045 78)",
+          "oklch(92% 0.03 80)"
+        ]
+      }
+    },
+    "motion": [
+      {
+        "name": "ease-settle",
+        "purpose": "State changes, hovers, reveals. Exponential ease-out only.",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)"
+      },
+      {
+        "name": "ease-press",
+        "purpose": "Button and card press compression.",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)"
+      }
+    ],
+    "shadows": [
+      {
+        "name": "resting",
+        "purpose": "Default. No shadow; separation from tone and hairlines.",
+        "value": "none"
+      },
+      {
+        "name": "hover-lift",
+        "purpose": "Interactive cards rising 2px on hover.",
+        "value": "0 10px 24px -18px rgba(10,31,20,0.45)"
+      },
+      {
+        "name": "header-seal",
+        "purpose": "Sticky header after scroll only.",
+        "value": "0 14px 30px -26px rgba(10,31,20,0.5)"
+      },
+      {
+        "name": "drawer-rise",
+        "purpose": "Cart, saved, and palette surfaces.",
+        "value": "-18px 0 44px -28px rgba(10,31,20,0.5)"
+      }
+    ],
+    "typographyMeta": {
+      "body": {
+        "displayName": "Body",
+        "purpose": "Copy, prices, policies. 16px Manrope, 1.65 line height, 68ch max."
+      },
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero and page headlines only, Marcellus sentence case."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section statements, plan names, confirmation titles."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Eyebrows, metadata, rails, status. 11px uppercase Marcellus-free."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card and service names. 20px Manrope semibold."
+      }
+    }
+  },
+  "generatedAt": "2026-09-17T00:00:00.000Z",
+  "narrative": {
+    "northStar": "The Vivid Greenhouse",
+    "overview": "A bright white room with product-grade green light. Ink that reads like pine-black, not black. One deep green for decisions and one vivid leaf for moments of energy, used the way a good product uses emphasis: rarely, precisely, and only where it moves the booking forward. The Chromatic Cut blues, the warm cream-and-bronze pass, and the muted Fog Pine pass are all retired as anti-references. Sections share one ground with hairline rules, never tinted bands. The footer owns the dark.",
+    "keyCharacteristics": [
+      "Bright light theme, near-white ground, never nocturnal, never cream, never flat gray-green.",
+      "Product greens: deep for trust, vivid for energy, mint for selection.",
+      "Round and friendly: pill actions, rounded cards, circle avatars, pill chips.",
+      "Flat by default. Depth comes from white cards on white, hairlines, and hover lift.",
+      "Function proves premium: accumulation, confirmation, and next-visit clarity over animation."
+    ],
+    "rules": [
+      {
+        "name": "The Leaf Rarity Rule",
+        "body": "Vivid leaf covers at most 10 percent of any screen. Deep green carries trust; vivid carries energy. If vivid spreads, it stops being premium.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Ground Rule",
+        "body": "Sections share the stone-white ground with hairline rules. No tinted color-block bands. The footer is the single deliberate dark.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Serif Rule",
+        "body": "Marcellus appears in display and headline only. Everything else is Manrope. Never set body or UI in the serif.",
+        "section": "typography"
+      },
+      {
+        "name": "The Scale Step Rule",
+        "body": "Adjacent type steps hold at least a 1.25 ratio. Flat scales read as uncommitted and are forbidden.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-By-Default Rule",
+        "body": "Surfaces are flat at rest. A shadow without a state change is a bug.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep layout, routes, and flows untouched. This pass is voice only.",
+      "Do hold vivid leaf to 10 percent or less per screen. Deep green carries trust; vivid carries energy.",
+      "Do round every action to a pill and every card family to 20px with gaps.",
+      "Do keep sections on the one shared ground with hairline rules. Only the footer goes dark.",
+      "Do set display in Marcellus and everything functional in Manrope.",
+      "Do use full 1px hairline mist borders for separation.",
+      "Do pair every color signal (selected, available, error) with a label or shape change.",
+      "Do honor reduced motion: disable parallax, marquee, and reveal choreography on request."
+    ],
+    "donts": [
+      "Don't use cobalt blue, ink-black panels, or porcelain-blue chrome. The old Chromatic Cut tokens are retired.",
+      "Don't use warm cream, sand, bronze, espresso, or muted pine-on-stone flatness. All three earlier passes are retired.",
+      "Don't ship sharp square buttons or hairline-grid card walls. Pills and gapped rounded cards, always.",
+      "Don't give any section its own tinted color-block band. Seamless ground, hairline rules, dark footer.",
+      "Don't use Space Grotesk, DM Sans, Inter, or any reflex-reject family for new type.",
+      "Don't use gradient text, glassmorphism cards, or decorative blur.",
+      "Don't use side-stripe accent borders (border-left or border-right greater than 1px as decoration) on cards, rows, notices, or selected states. Use full borders, mint wash grounds, or nothing.",
+      "Don't build identical icon-plus-heading card grids or hero-metric stat blocks. Vary rhythm per the existing editorial layout.",
+      "Don't ship gold-on-black luxury clich\u00e9, heavy shadows, or stock-glamour staging.",
+      "Don't set body copy in all caps or letter-space body text. Reserve caps for 11px labels.",
+      "Don't animate layout properties. Ease state changes out with exponential curves only."
+    ]
+  },
+  "schemaVersion": 2,
+  "title": "Design System: Sable Hair Studio \u2014 Quiet Expense"
+}
