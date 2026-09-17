@@ -122,9 +122,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-[#F5F8F4] text-[#0A1F14]">
       <ScrollProgress />
       <header className="site-header">
-        <div className="studio-rail" aria-hidden="true">
-          <span>SEATTLE, WA</span>
-        </div>
         <div className="header-inner">
           <BrandMark />
           <nav className="desktop-nav" aria-label="Primary navigation">
@@ -224,7 +221,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       </header>
       <main>{children}</main>
       <footer className="site-footer">
-        <div className="footer-rail" aria-hidden="true"><span>09</span></div>
         <div className="footer-grid">
           <div>
             <BrandMark />

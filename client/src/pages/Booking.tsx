@@ -80,7 +80,7 @@ export default function Booking() {
 
   return (
     <SiteShell>
-      <section className="booking-header"><div className="page-rail" aria-hidden="true"><span>04 / BOOK</span></div><div data-reveal="left"><PageEyebrow>Appointment planner</PageEyebrow><h1>The right service.<br /><em>The right amount of time.</em></h1></div><p data-reveal="right" style={{ "--rd": "90ms" } as React.CSSProperties}>Choose the work first. We will only show specialists and slots that can properly accommodate it.</p></section>
+      <section className="booking-header"><div data-reveal="left"><PageEyebrow>Appointment planner</PageEyebrow><h1>The right service.<br /><em>The right amount of time.</em></h1></div><p data-reveal="right" style={{ "--rd": "90ms" } as React.CSSProperties}>Choose the work first. We will only show specialists and slots that can properly accommodate it.</p></section>
       <section className="booking-layout">
         <div className="booking-steps">
           <section className="booking-step" data-reveal="up"><div className="step-title"><span>01</span><div><h2>What are we making time for?</h2><p>Prices and timing are visible before you commit.</p></div></div><div className="booking-service-grid">{services.map((item) => <button key={item.id} className={serviceId === item.id ? "booking-service selected" : "booking-service"} aria-pressed={serviceId === item.id} onClick={() => selectService(item.id)}><span>{item.category}</span><b>{item.name}</b><small>{item.duration} min · ${item.price}</small></button>)}</div></section>

@@ -32,9 +32,7 @@
 
 @layer components {
   .site-header { position: relative; z-index: 30; border-bottom: 1px solid #DCE3D6; background: rgba(245,248,251,.92); backdrop-filter: blur(14px); }
-  .header-inner { min-height: 76px; max-width: 1440px; margin: 0 auto; padding: 0 4.5rem 0 6.25rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
-  .studio-rail, .hero-rail, .section-rail, .page-rail, .footer-rail { position: absolute; top: 0; bottom: 0; left: 0; width: 54px; border-right: 1px solid #DCE3D6; display: flex; align-items: flex-start; justify-content: center; padding-top: 1.4rem; }
-  .studio-rail span, .hero-rail span, .section-rail span, .page-rail span, .footer-rail span { font: 600 10px/1 "Marcellus", Georgia, serif; letter-spacing: .15em; color: #66756A; writing-mode: vertical-rl; transform: rotate(180deg); }
+  .header-inner { min-height: 76px; max-width: 1440px; margin: 0 auto; padding: 0 4.5rem 0 clamp(2rem,8vw,11rem); display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
   .brand-mark { display: inline-flex; align-items: center; gap: .68rem; color: inherit; text-decoration: none; min-width: 170px; }
   .brand-symbol { width: 34px; height: 34px; object-fit: contain; }
   .brand-type { display: grid; gap: .06rem; font: 700 16px/.95 "Marcellus", Georgia, serif; letter-spacing: .115em; }
@@ -49,7 +47,7 @@
   .book-link:active, .primary-cta:active, .white-cta:active { transform: scale(.97); }
   .mobile-menu-button, .mobile-nav { display: none; }
   .hero-section { min-height: 630px; display: grid; grid-template-columns: minmax(0, .92fr) minmax(480px, 1.08fr); position: relative; max-width: 1440px; margin: 0 auto; }
-  .hero-copy { padding: 9.3rem clamp(2rem,6vw,7rem) 4.6rem clamp(5.6rem,8vw,11rem); display: flex; flex-direction: column; align-items: flex-start; }
+  .hero-copy { padding: 9.3rem clamp(2rem,6vw,7rem) 4.6rem clamp(2rem,8vw,11rem); display: flex; flex-direction: column; align-items: flex-start; }
   .eyebrow { display: inline-flex; align-items: center; gap: .55rem; color: #4E5B51; font: 700 10px/1.2 "Marcellus", Georgia, serif; letter-spacing: .15em; text-transform: uppercase; margin: 0 0 1.15rem; }
   .eyebrow span { width: 25px; height: 2px; background: #147A45; display: inline-block; transform: skewX(-24deg); }
   h1, h2, h3 { font-family: "Marcellus", Georgia, serif; }
@@ -66,7 +64,7 @@
   .hero-image-wrap { position: relative; overflow: hidden; background: #CFD8C8; min-height: 100%; }
   .hero-image { width: 100%; height: 100%; object-fit: cover; animation: image-settle .8s cubic-bezier(.23,1,.32,1) both; }
   .hero-image-caption { position: absolute; inset: auto 0 0 0; padding: 1rem 1.4rem; display: flex; justify-content: space-between; color: #F5F8F4; font: 600 10px/1 "Marcellus", Georgia, serif; letter-spacing: .12em; background: linear-gradient(transparent, rgba(10,31,20,.62)); }
-  .service-intro { position: relative; max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1.25fr .75fr; gap: clamp(2rem,8vw,10rem); padding: 9.5rem clamp(2rem,8vw,11rem) 5rem clamp(5.6rem,12vw,15.5rem); }
+  .service-intro { position: relative; max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1.25fr .75fr; gap: clamp(2rem,8vw,10rem); padding: 9.5rem clamp(2rem,8vw,11rem) 5rem; }
   .intro-statement h2, .booking-copy h2, .membership-copy h2, .final-cta h2, .page-hero h1, .about-hero h1, .studio-principles h2, .team-heading h2, .contact-section h2 { font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.06; letter-spacing: -.015em; margin: 0; font-weight: 400; }
   .intro-detail { align-self: end; color: #38443B; font-size: 16px; line-height: 1.65; }
   .intro-detail p { margin: 0 0 1.4rem; }
@@ -103,7 +101,7 @@
   .membership-note { position: absolute; right: 2.7rem; top: 2.7rem; display: flex; align-items: center; gap: .5rem; color: #A9BFA9; font: 600 10px/1.25 "Marcellus", Georgia, serif; letter-spacing: .1em; text-transform: uppercase; }
   .final-cta { padding: 9rem clamp(2rem,8vw,11rem); max-width: 1030px; margin: 0 auto; }
   .final-cta p { color: #38443B; max-width: 41rem; line-height: 1.7; margin: 1.6rem 0 2rem; }
-  .site-footer { position: relative; background: #E2E9DC; padding: 4rem clamp(2rem,5vw,6rem) 1.2rem clamp(5.6rem,8vw,10rem); }
+  .site-footer { position: relative; background: #E2E9DC; padding: 4rem clamp(2rem,8vw,11rem) 1.2rem; }
   .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); gap: 2rem; padding-bottom: 4rem; max-width: 1300px; margin: 0 auto; }
   .footer-intro { color: #38443B; font-size: 13px; max-width: 18rem; line-height: 1.6; margin: 1.2rem 0 0; }
   .footer-label { color: #147A45; font: 700 10px/1.2 "Marcellus", Georgia, serif; text-transform: uppercase; letter-spacing: .14em; margin: 0 0 .85rem; }
@@ -112,11 +110,11 @@
   .footer-column a { color: inherit; text-decoration: none; line-height: 1.55; display: flex; gap: .35rem; align-items: flex-start; }
   .footer-column a:hover { color: #147A45; }
   .footer-bottom { border-top: 1px solid #C4CDBD; padding-top: 1.15rem; display: flex; justify-content: space-between; gap: 1rem; color: #4E5B51; font-size: 10px; letter-spacing: .04em; max-width: 1300px; margin: 0 auto; }
-  .page-hero, .booking-header, .about-hero { position: relative; padding: 9rem clamp(2rem,8vw,11rem) 5rem clamp(5.6rem,12vw,15.5rem); max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1.25fr .75fr; gap: 5rem; align-items: end; }
+  .page-hero, .booking-header, .about-hero { position: relative; padding: 9rem clamp(2rem,8vw,11rem) 5rem; max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1.25fr .75fr; gap: 5rem; align-items: end; }
   .page-hero > p, .booking-header > p, .page-hero > div > p, .booking-header > div > p { color: #38443B; font-size: 16px; line-height: 1.65; margin: 0 0 .4rem; max-width: 29rem; }
   .matcher-trigger { margin-top: 1.5rem; }
   .services-list { max-width: 1440px; margin: 0 auto; border-top: 1px solid #DCE3D6; }
-  .service-row { display: grid; grid-template-columns: 4rem minmax(0,1fr) 12.5rem auto; gap: 1.8rem; padding: 2.5rem clamp(2rem,8vw,11rem) 2.35rem clamp(5.6rem,12vw,15.5rem); border-bottom: 1px solid #DCE3D6; position: relative; transition: background .2s ease; }
+  .service-row { display: grid; grid-template-columns: 4rem minmax(0,1fr) 12.5rem auto; gap: 1.8rem; padding: 2.5rem clamp(2rem,8vw,11rem) 2.35rem; border-bottom: 1px solid #DCE3D6; position: relative; transition: background .2s ease; }
   .service-row:hover { background: #DFF2E3; }
   .service-row-index { font: 600 12px/1 "Marcellus", Georgia, serif; color: #66756A; padding-top: .35rem; }
   .service-row-heading { display: flex; align-items: center; gap: .8rem; }
@@ -138,7 +136,7 @@
   .policy-cards h3 { font-size: 15px; letter-spacing: -.02em; margin: .8rem 0; }
   .policy-cards p { color: #38443B; line-height: 1.55; font-size: 13px; margin: 0; }
   .booking-header { padding-bottom: 4rem; }
-  .booking-layout { display: grid; grid-template-columns: minmax(0,1fr) 330px; gap: 4rem; padding: 0 clamp(2rem,8vw,11rem) 7rem clamp(5.6rem,12vw,15.5rem); max-width: 1440px; margin: 0 auto; align-items: start; }
+  .booking-layout { display: grid; grid-template-columns: minmax(0,1fr) 330px; gap: 4rem; padding: 0 clamp(2rem,8vw,11rem) 7rem; max-width: 1440px; margin: 0 auto; align-items: start; }
   .booking-steps { border-top: 1px solid #DCE3D6; }
   .booking-step { padding: 2.35rem 0; border-bottom: 1px solid #DCE3D6; transition: opacity .2s ease; }
   .muted-step { opacity: .55; }
@@ -329,12 +327,12 @@
   .quickview-nav { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #DCE3D6; margin-top: .4rem; padding: .9rem 1.5rem 0; color: #38443B; font-size: 12px; font-weight: 700; }
   .quickview-nav button { display: inline-flex; align-items: center; gap: .35rem; border: 0; background: transparent; color: #14211A; font-size: 12px; font-weight: 700; padding: .4rem .2rem; }
   .quickview-nav button:hover { color: #147A45; }
-  .press-strip { max-width: 1440px; margin: 0 auto; display: flex; align-items: center; gap: 1.6rem; flex-wrap: wrap; padding: 1.4rem clamp(2rem,8vw,11rem) 1.4rem clamp(5.6rem,12vw,15.5rem); border-top: 1px solid #DCE3D6; border-bottom: 1px solid #DCE3D6; background: #E7ECE2; }
+  .press-strip { max-width: 1440px; margin: 0 auto; display: flex; align-items: center; gap: 1.6rem; flex-wrap: wrap; padding: 1.4rem clamp(2rem,8vw,11rem); border-top: 1px solid #DCE3D6; border-bottom: 1px solid #DCE3D6; background: #E7ECE2; }
   .press-label { font: 700 10px/1 "Marcellus", Georgia, serif; letter-spacing: .14em; text-transform: uppercase; color: #147A45; }
   .press-names { display: flex; gap: 1.6rem; flex-wrap: wrap; font: 600 13px/1 "Marcellus", Georgia, serif; letter-spacing: .06em; color: #1C2620; }
   .press-strip small { margin-left: auto; color: #5A665C; font-size: 11px; }
   .filter-bar { position: sticky; top: 0; z-index: 20; background: rgba(245,248,244,.94); backdrop-filter: blur(10px); border-bottom: 1px solid #DCE3D6; }
-  .filter-inner { max-width: 1440px; margin: 0 auto; display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; padding: .85rem clamp(2rem,8vw,11rem) .85rem clamp(5.6rem,12vw,15.5rem); }
+  .filter-inner { max-width: 1440px; margin: 0 auto; display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; padding: .85rem clamp(2rem,8vw,11rem); }
   .filter-search { display: inline-flex; align-items: center; gap: .45rem; border: 1px solid #C4CDBD; background: #FCFDFB; padding: .55rem .7rem; min-width: 210px; flex: 1 1 210px; max-width: 300px; }
   .filter-search input { border: 0; outline: 0; background: transparent; font-size: 13px; width: 100%; color: #0A1F14; }
   .filter-chip { border: 1px solid #C4CDBD; background: #FCFDFB; padding: .55rem .75rem; font-size: 12px; font-weight: 700; color: #2A352C; }
@@ -357,7 +355,7 @@
   .retail-card small { color: #5A665C; font-size: 11px; }
   .retail-foot { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #DCE3D6; padding-top: .9rem; margin-top: .4rem; }
   .retail-foot b { font: 600 20px/1 "Marcellus", Georgia, serif; letter-spacing: -.04em; }
-  .visit-layout { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; padding: 0 clamp(2rem,8vw,11rem) 7rem clamp(5.6rem,12vw,15.5rem); align-items: start; }
+  .visit-layout { max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; padding: 0 clamp(2rem,8vw,11rem) 7rem; align-items: start; }
   .visit-cards { display: grid; gap: .7rem; margin: 2rem 0; }
   .visit-card { display: grid; grid-template-columns: 2.4rem 1fr auto; gap: .7rem; align-items: center; border: 1px solid #C4CDBD; background: #FCFDFB; padding: 1rem; }
   .visit-card > span:first-child { width: 38px; height: 38px; display: grid; place-items: center; background: #DFF2E3; color: #147A45; }
@@ -378,7 +376,7 @@
   .form-field input:focus, .form-field textarea:focus, .form-field select:focus { outline: 2px solid #147A45; outline-offset: 1px; background: #FCFDFB; }
   .form-field [aria-invalid="true"] { border-color: #9C4A3C; }
   .field-error { color: #9C4A3C; font-size: 11px; }
-  .notfound-wrap { position: relative; max-width: 1440px; margin: 0 auto; padding: 9rem clamp(2rem,8vw,11rem) 8rem clamp(5.6rem,12vw,15.5rem); display: grid; grid-template-columns: 1.1fr .9fr; gap: 4rem; align-items: center; }
+  .notfound-wrap { position: relative; max-width: 1440px; margin: 0 auto; padding: 9rem clamp(2rem,8vw,11rem) 8rem; display: grid; grid-template-columns: 1.1fr .9fr; gap: 4rem; align-items: center; }
   .notfound-code { font: 400 clamp(4rem,8vw,7rem)/1 "Marcellus", Georgia, serif; letter-spacing: -.02em; margin: 1rem 0 0; }
   .notfound-code em { font-style: normal; color: #147A45; }
   .notfound-wrap > div > p { color: #38443B; line-height: 1.7; max-width: 30rem; margin: 1.4rem 0 2rem; }
@@ -455,8 +453,6 @@
   .site-footer { background: #0A1F14; }
   .site-footer .brand-type { color: #F5F8F4; }
   .site-footer .brand-type small { color: #7E8F80; }
-  .footer-rail { border-right-color: rgba(250,252,249,.14); }
-  .footer-rail span { color: #7E8F80; }
   .footer-intro { color: #A9BFA9; }
   .footer-column { color: #C6D6C8; }
   .footer-column a:hover, .footer-match-link:hover { color: #27C46B; }
@@ -690,11 +686,8 @@
     .desktop-nav { gap: .95rem; }
     .desktop-nav .nav-link { font-size: 12px; }
   }
-  @media (max-width: 1050px) { .header-inner { padding-right: 2rem; } .hero-copy { padding-left: 5.6rem; } .service-intro, .page-hero, .booking-header, .about-hero { padding-left: 5.6rem; padding-right: 3rem; } .service-row { padding-left: 5.6rem; padding-right: 3rem; grid-template-columns: 2rem minmax(0,1fr) 11rem auto; gap: 1rem; } .booking-layout { padding-left: 5.6rem; padding-right: 3rem; gap: 2rem; } .booking-feature { padding-left: 5.6rem; padding-right: 3rem; } .membership-copy { padding-right: 3rem; } .policy-panel, .studio-principles, .contact-section, .team-section { padding-left: 5.6rem; padding-right: 3rem; } .membership-grid, .membership-faq, .mini-cta, .active-plan-banner { margin-left: 3rem; margin-right: 3rem; } }
+  @media (max-width: 1050px) { .header-inner { padding: 0 2rem 0 3rem; } .hero-copy { padding-left: 3rem; } .service-intro, .page-hero, .booking-header, .about-hero { padding-left: 3rem; padding-right: 3rem; } .service-row { padding-left: 3rem; padding-right: 3rem; grid-template-columns: 2rem minmax(0,1fr) 11rem auto; gap: 1rem; } .booking-layout { padding-left: 3rem; padding-right: 3rem; gap: 2rem; } .booking-feature { padding-left: 3rem; padding-right: 3rem; } .membership-copy { padding-right: 3rem; } .policy-panel, .studio-principles, .contact-section, .team-section { padding-left: 3rem; padding-right: 3rem; } .membership-grid, .membership-faq, .mini-cta, .active-plan-banner { margin-left: 3rem; margin-right: 3rem; } }
   @media (max-width: 780px) {
-    /* Rails are decorative chrome; they cost 54px of the narrowest screens. */
-    .studio-rail, .hero-rail, .section-rail, .page-rail, .footer-rail { display: none; }
-
     /* ---------- Header: keep the useful controls, drop the rest ---------- */
     .header-inner { min-height: 64px; padding: 0 1rem; gap: .4rem; }
     .brand-mark { min-width: auto; margin-right: auto; }

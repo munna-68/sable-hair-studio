@@ -81,8 +81,13 @@ export function RetailGrid({ compact = false }: { compact?: boolean }) {
  * the left is the same frame desaturated and flattened to read as grown-out
  * colour. Driven by a real range input so it works by drag, click and keyboard.
  *
- * This is a simulated preview for the showcase — not a photograph of a real
- * client's before-and-after.
+ * ON HOLD — waiting on real before/after photography. Both sides currently
+ * share `sable-stylist-work_da71216e.jpg`; the "before" side is faked with a
+ * CSS filter (see `.compare-before img` in index.css). To swap in the real
+ * pair, drop `compare-before.jpg` / `compare-after.jpg` into
+ * `client/public/images/`, point the two `src` values below at them, and
+ * delete the `.compare-before img` filter rule — otherwise the real "before"
+ * photo gets desaturated twice.
  */
 export function ColorCompare() {
   const [pos, setPos] = useState(52);

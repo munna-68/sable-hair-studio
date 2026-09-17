@@ -16,7 +16,6 @@ export default function NotFound() {
   return (
     <SiteShell>
       <section className="notfound-wrap">
-        <div className="page-rail" aria-hidden="true"><span>404</span></div>
         <div>
           <PageEyebrow>Off the runway</PageEyebrow>
           <p className="notfound-code">40<em>4</em></p>

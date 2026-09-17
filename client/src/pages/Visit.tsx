@@ -69,7 +69,6 @@ export default function Visit() {
   return (
     <SiteShell>
       <section className="page-hero">
-        <div className="page-rail" aria-hidden="true"><span>06 / VISIT</span></div>
         <div data-reveal="left">
           <PageEyebrow>Come by the studio</PageEyebrow>
           <h1>Find a little <em>time for you.</em></h1>

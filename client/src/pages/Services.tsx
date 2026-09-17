@@ -52,7 +52,6 @@ export default function Services() {
   return (
     <SiteShell>
       <section className="page-hero services-hero">
-        <div className="page-rail" aria-hidden="true"><span>03 / SERVICES</span></div>
         <div data-reveal="left"><PageEyebrow>The work, clearly explained</PageEyebrow><h1>Plan for the <em>finish.</em><br />Stay for the detail.</h1></div>
         <div data-reveal="right" style={{ "--rd": "90ms" } as React.CSSProperties}>
           <p>Every service includes the information that affects your day: realistic time in chair, price, who does it, and any booking considerations.</p>

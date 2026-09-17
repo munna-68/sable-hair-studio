@@ -20,7 +20,7 @@ export default function Memberships() {
 
   return (
     <SiteShell>
-      <section className="page-hero membership-hero"><div className="page-rail" aria-hidden="true"><span>05 / MEMBERS</span></div><div data-reveal="left"><PageEyebrow>Care, already accounted for</PageEyebrow><h1>Good hair is less a <em>moment</em><br />than a rhythm.</h1></div><p data-reveal="right" style={{ "--rd": "90ms" } as React.CSSProperties}>Choose a plan that matches how you maintain your cut, color, or finish. Your next visit is generated the moment you join.</p></section>
+      <section className="page-hero membership-hero"><div data-reveal="left"><PageEyebrow>Care, already accounted for</PageEyebrow><h1>Good hair is less a <em>moment</em><br />than a rhythm.</h1></div><p data-reveal="right" style={{ "--rd": "90ms" } as React.CSSProperties}>Choose a plan that matches how you maintain your cut, color, or finish. Your next visit is generated the moment you join.</p></section>
       {selectedPlan && <section className="active-plan-banner" data-reveal="scale"><div className="active-plan-icon"><CalendarCheck2 size={22} /></div><div><p className="service-category">Your membership is active</p><h2>{selectedPlan.name}</h2><p>Your next auto-scheduled visit: <b>{getNextMembershipDate(selectedPlan.intervalDays)}</b></p></div><button className="pause-button" onClick={() => setActivePlan(null)}><PauseCircle size={16} /> Pause plan</button></section>}
       <section className="membership-grid">
         {memberships.map((plan, index) => (

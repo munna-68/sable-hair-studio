@@ -19,7 +19,6 @@ export default function Home() {
   return (
     <SiteShell>
       <section className="hero-section">
-        <div className="hero-rail" aria-hidden="true"><span>01 / STUDIO</span></div>
         <div className="hero-copy">
           <div data-reveal="fade"><PageEyebrow>Color. Cut. Care.</PageEyebrow></div>
           <h1>
@@ -56,7 +55,6 @@ export default function Home() {
       <PressStrip />
 
       <section className="service-intro" id="approach">
-        <div className="section-rail" aria-hidden="true"><span>02</span></div>
         <div className="intro-statement">
           <div data-reveal="left"><PageEyebrow>The Sable standard</PageEyebrow></div>
           <h2 data-reveal="up" style={{ "--rd": "70ms" } as React.CSSProperties}>
@@ -88,7 +86,7 @@ export default function Home() {
 
       <section className="booking-feature">
         <div className="booking-visual" data-reveal="left">
-          <img src={withBase("/images/sable-stylist-work_da71216e.jpg")} alt="A Sable colorist applying a precise highlight placement" />
+          <img src={withBase("/images/sable-color-service_4d2515aa.jpg")} alt="A Sable colorist brushing colour through a precisely foiled section" />
           <div className="visual-stamp"><Palette size={18} /><span>Color<br />plans</span></div>
         </div>
         <div className="booking-copy">
