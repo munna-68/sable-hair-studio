@@ -78,16 +78,14 @@ export function RetailGrid({ compact = false }: { compact?: boolean }) {
 
 /**
  * Drag-to-compare colour plate. The right side is the finished, glossed result;
- * the left is the same frame desaturated and flattened to read as grown-out
- * colour. Driven by a real range input so it works by drag, click and keyboard.
+ * the left is the same frame as grown-out colour. Driven by a real range input
+ * so it works by drag, click and keyboard.
  *
- * ON HOLD — waiting on real before/after photography. Both sides currently
- * share `sable-stylist-work_da71216e.jpg`; the "before" side is faked with a
- * CSS filter (see `.compare-before img` in index.css). To swap in the real
- * pair, drop `compare-before.jpg` / `compare-after.jpg` into
- * `client/public/images/`, point the two `src` values below at them, and
- * delete the `.compare-before img` filter rule — otherwise the real "before"
- * photo gets desaturated twice.
+ * Both sides are real photography shot from the same locked-off setup, so the
+ * seam lines up exactly: `before.png` / `after.png` in `client/public/images/`
+ * are both 1536×1024, which means `object-fit: cover` crops them identically at
+ * every viewport. Keep any replacement pair at a matching aspect ratio and
+ * framing or the divider will jump as it crosses the join.
  */
 export function ColorCompare() {
   const [pos, setPos] = useState(52);
@@ -99,11 +97,13 @@ export function ColorCompare() {
       <div className="compare-stage" style={{ "--pos": `${pos}%` } as React.CSSProperties}>
         <img
           className="compare-after"
-          src={withBase("/images/sable-stylist-work_da71216e.jpg")}
-          alt="Finished dimensional colour with a glossy, light-catching finish"
+          src={withBase("/images/after.png")}
+          alt="The same hair after a gloss — deep, reflective brown with a light-catching finish"
+          loading="lazy"
+          decoding="async"
         />
         <div className="compare-before" aria-hidden="true">
-          <img src={withBase("/images/sable-stylist-work_da71216e.jpg")} alt="" />
+          <img src={withBase("/images/before.png")} alt="" loading="lazy" decoding="async" />
         </div>
 
         <div className="compare-handle" aria-hidden="true">
@@ -138,7 +138,7 @@ export function ColorCompare() {
           <b>What a gloss actually changes.</b> Placement and depth do the heavy lifting — the
           finishing gloss is what makes light catch the surface.
         </p>
-        <small>Simulated preview for this showcase. Ask for a strand test in the chair.</small>
+        <small>Grown-out versus re-glossed, shot from the same setup. Ask for a strand test in the chair.</small>
       </div>
     </div>
   );

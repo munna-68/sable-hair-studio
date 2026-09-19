@@ -581,10 +581,13 @@
 
   /* ---- Drag-to-compare plate ---- */
   .compare { display: grid; gap: 1.4rem; }
-  .compare-stage { position: relative; overflow: hidden; aspect-ratio: 4 / 3; background: #CFD8C8; border-radius: 0 24px 0 0; touch-action: pan-y; }
+  /* Placeholder tone matches the studio's concrete backdrop so the stage does
+     not flash sage while the (large) compare photos decode. */
+  .compare-stage { position: relative; overflow: hidden; aspect-ratio: 4 / 3; background: #D6D0C7; border-radius: 0 24px 0 0; touch-action: pan-y; }
   .compare-stage img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; user-select: none; }
   .compare-before { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--pos, 50%)) 0 0); }
-  .compare-before img { filter: saturate(.42) brightness(.93) contrast(.9) sepia(.1); }
+  /* No filter here: `before.png` is a real photograph of the grown-out colour,
+     not a desaturated stand-in. See ColorCompare in ShowcaseBits.tsx. */
   .compare-handle { position: absolute; top: 0; bottom: 0; left: var(--pos, 50%); transform: translateX(-50%); pointer-events: none; }
   .compare-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #FCFDFB; transform: translateX(-50%); box-shadow: 0 0 12px rgba(10,31,20,.4); }
   .compare-knob { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 42px; height: 42px; display: grid; place-items: center; background: #FCFDFB; color: #0A1F14; box-shadow: 0 6px 20px -6px rgba(10,31,20,.6); }
