@@ -125,9 +125,23 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-[#F5F8F4] text-[#0A1F14]">
       {settings.announcementBanner.enabled && (
-        <aside aria-label="Studio announcement" className="bg-[#0A1F14] text-[#E6EFE9] text-xs py-2 px-4 text-center font-medium tracking-wide flex items-center justify-center gap-2 border-b border-[#147A45]/30">
-          <Sparkles size={13} className="text-[#34D399]" />
-          <span>{settings.announcementBanner.message}</span>
+        <aside
+          aria-label="Studio announcement"
+          className="bg-[#0A1F14] text-[#E6EFE9] text-xs py-2 px-4 text-center font-medium tracking-wide flex flex-wrap items-center justify-center gap-2 sm:gap-3 border-b border-[#147A45]/30 relative z-40"
+        >
+          <div className="flex items-center gap-1.5">
+            <Sparkles size={13} className="text-[#34D399] shrink-0" />
+            <span>{settings.announcementBanner.message}</span>
+          </div>
+          <span className="hidden sm:inline text-white/30 text-xs">•</span>
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#147A45] hover:bg-[#1C9656] text-white text-[11px] font-bold tracking-normal transition-all hover:scale-105 active:scale-95 shadow-xs"
+          >
+            <LayoutDashboard size={12} />
+            <span>See Owner Dashboard</span>
+            <ArrowUpRight size={12} />
+          </Link>
         </aside>
       )}
       <ScrollProgress />
@@ -195,6 +209,14 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+            <Link
+              href="/dashboard"
+              className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-[#147A45]/40 bg-[#147A45]/10 hover:bg-[#147A45] text-[#147A45] hover:text-white text-xs font-semibold transition-all shadow-2xs hover:scale-105 active:scale-95 group ml-1"
+              title="Studio Owner Dashboard Demo"
+            >
+              <LayoutDashboard size={13} className="text-[#147A45] group-hover:text-white transition-colors" />
+              <span>Owner Dashboard</span>
+            </Link>
             <Link href="/book" className="book-link">
               Book a visit <ArrowUpRight size={15} aria-hidden="true" />
             </Link>
@@ -300,6 +322,21 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <SavedDrawer />
       <ServiceMatcher open={matcherOpen} onOpenChange={setMatcherOpen} />
       <BackToTop />
+      {/* Floating Demo Trigger for prospective clients & leads */}
+      <aside aria-label="Portfolio showcase quick links" className="fixed bottom-5 right-5 z-40 flex items-center gap-2 print:hidden">
+        <Link
+          href="/dashboard"
+          className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#0A1F14] hover:bg-[#147A45] text-white border border-[#147A45]/40 text-xs font-bold tracking-wide transition-all hover:scale-105 active:scale-95 shadow-lg group backdrop-blur-md"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#34D399] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#34D399]"></span>
+          </span>
+          <LayoutDashboard size={13} className="text-[#34D399] group-hover:text-white transition-colors" />
+          <span>Owner Dashboard</span>
+          <ArrowUpRight size={12} className="text-white/60 group-hover:text-white transition-colors" />
+        </Link>
+      </aside>
     </div>
   );
 }
