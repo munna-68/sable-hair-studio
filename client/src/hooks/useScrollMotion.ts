@@ -14,6 +14,7 @@
  */
 
 import { useEffect } from "react";
+import { parseTimeToMinutes } from "@/lib/salon-data";
 
 function prefersReducedMotion() {
   return (
@@ -184,8 +185,56 @@ export function useCountUp(target: number, options?: { duration?: number; suffix
 }
 
 /** Formats the studio's next open/close moment for the live status pill. */
-export function getStudioStatus(now = new Date()) {
-  // Tue–Fri 9–18, Sat–Sun 10–17, closed Monday. Mirrors the printed hours.
+export function getStudioStatus(
+  now = new Date(),
+  customHours?: { day: string; shortDay: string; open: string; close: string; closed: boolean }[],
+  isOpenTodayOverride = true
+) {
+  if (!isOpenTodayOverride) {
+    return { open: false, label: "Studio closed today", detail: "Appointments can still be booked online." };
+  }
+
+  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const formatMinutes = (mins: number) => {
+    const hour = Math.floor(mins / 60);
+    const m = mins % 60;
+    const suffix = hour >= 12 ? "PM" : "AM";
+    const h = hour % 12 || 12;
+    return m === 0 ? `${h}:00 ${suffix}` : `${h}:${String(m).padStart(2, "0")} ${suffix}`;
+  };
+
+  const day = now.getDay();
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+  if (customHours && customHours.length === 7) {
+    const today = customHours[day];
+    if (today && !today.closed) {
+      const openMin = parseTimeToMinutes(today.open);
+      const closeMin = parseTimeToMinutes(today.close);
+      if (openMin > 0 && closeMin > openMin) {
+        if (currentMinutes >= openMin && currentMinutes < closeMin) {
+          return { open: true, label: `Open now · closes ${formatMinutes(closeMin)}`, detail: "Walk in for retail, book for the chair." };
+        }
+        if (currentMinutes < openMin) {
+          return { open: false, label: `Closed · opens ${formatMinutes(openMin)} today`, detail: "Appointments can still be booked online." };
+        }
+      }
+    }
+
+    for (let step = 1; step <= 7; step++) {
+      const nextDay = (day + step) % 7;
+      const next = customHours[nextDay];
+      if (next && !next.closed) {
+        const nextOpen = parseTimeToMinutes(next.open);
+        const when = step === 1 ? "tomorrow" : dayNames[nextDay];
+        return { open: false, label: `Closed · opens ${when} ${formatMinutes(nextOpen)}`, detail: "Appointments can still be booked online." };
+      }
+    }
+
+    return { open: false, label: "Closed", detail: "Appointments can still be booked online." };
+  }
+
+  // Fallback printed hours
   const hours: Record<number, [number, number] | null> = {
     0: [10, 17],
     1: null,
@@ -195,23 +244,20 @@ export function getStudioStatus(now = new Date()) {
     5: [9, 18],
     6: [10, 17],
   };
-  const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const label = (hour: number) => {
     const suffix = hour >= 12 ? "PM" : "AM";
     const h = hour % 12 || 12;
     return `${h}:00 ${suffix}`;
   };
 
-  const day = now.getDay();
-  const minutes = now.getHours() * 60 + now.getMinutes();
   const today = hours[day];
 
   if (today) {
     const [open, close] = today;
-    if (minutes >= open * 60 && minutes < close * 60) {
+    if (currentMinutes >= open * 60 && currentMinutes < close * 60) {
       return { open: true, label: `Open now · closes ${label(close)}`, detail: "Walk in for retail, book for the chair." };
     }
-    if (minutes < open * 60) {
+    if (currentMinutes < open * 60) {
       return { open: false, label: `Closed · opens ${label(open)} today`, detail: "Appointments can still be booked online." };
     }
   }

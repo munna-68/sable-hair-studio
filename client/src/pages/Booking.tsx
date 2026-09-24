@@ -37,7 +37,7 @@ import { SalonAppointment } from "@/lib/defaultStudioData";
 export default function Booking() {
   const [location] = useLocation();
   const queryService = new URLSearchParams(location.split("?")[1]).get("service") ?? "";
-  const { services, addAppointment, addToBag } = useStudio();
+  const { services, appointments, settings, addAppointment, addToBag } = useStudio();
 
   const [serviceId, setServiceId] = useState(queryService);
   const [isNewClient, setIsNewClient] = useState(true);
@@ -54,10 +54,18 @@ export default function Booking() {
   const [createdApt, setCreatedApt] = useState<SalonAppointment | null>(null);
   const [confirmed, setConfirmed] = useState(false);
 
-  const dates = useMemo(() => getDateOptions(), []);
-  const service = services.find((s) => s.id === serviceId);
-  const compatibleStylists = getCompatibleStylists(serviceId);
-  const slots = getAvailableSlots(stylistId, serviceId, dateKey);
+  const dates = useMemo(() => getDateOptions(14), []);
+  const service = useMemo(() => services.find((s) => s.id === serviceId), [services, serviceId]);
+  const compatibleStylists = useMemo(() => getCompatibleStylists(serviceId, service), [serviceId, service]);
+  const slots = useMemo(() => {
+    return getAvailableSlots(stylistId, serviceId, dateKey, {
+      existingAppointments: appointments,
+      blackoutDates: settings.blackoutDates,
+      operatingHours: settings.operatingHours,
+      serviceObj: service,
+    });
+  }, [stylistId, serviceId, dateKey, appointments, settings.blackoutDates, settings.operatingHours, service]);
+
   const consultationRequired = Boolean(service?.chemical && isNewClient);
   const deposit = getDepositAmount(service);
 
@@ -166,7 +174,29 @@ export default function Booking() {
   function downloadIcs() {
     if (!service || !createdApt) return;
     const title = `Sable Hair Studio: ${service.name}`;
-    const desc = `Appointment with ${createdApt.stylistName} at Sable Hair Studio (118 Pine St, Seattle). Confirmation #${createdApt.id}.`;
+    const desc = `Appointment with ${createdApt.stylistName} at Sable Hair Studio (${settings.address}). Confirmation #${createdApt.id}.`;
+
+    // Calculate exact start and end times based on slot and duration
+    const match = createdApt.timeSlot.match(/^0?(\d+):(\d+)\s*(AM|PM)$/i);
+    let startH = 10;
+    let startM = 0;
+    if (match) {
+      let h = parseInt(match[1], 10);
+      const m = parseInt(match[2], 10);
+      const isPM = match[3].toUpperCase() === "PM";
+      if (isPM && h < 12) h += 12;
+      if (!isPM && h === 12) h = 0;
+      startH = h;
+      startM = m;
+    }
+    const totalStartMinutes = startH * 60 + startM;
+    const totalEndMinutes = totalStartMinutes + (createdApt.duration || 60);
+    const endH = Math.floor(totalEndMinutes / 60);
+    const endM = totalEndMinutes % 60;
+
+    const dtStart = `${dateKey.replace(/-/g, "")}T${String(startH).padStart(2, "0")}${String(startM).padStart(2, "0")}00`;
+    const dtEnd = `${dateKey.replace(/-/g, "")}T${String(endH).padStart(2, "0")}${String(endM).padStart(2, "0")}00`;
+
     const icsContent = [
       "BEGIN:VCALENDAR",
       "VERSION:2.0",
@@ -174,9 +204,9 @@ export default function Booking() {
       "BEGIN:VEVENT",
       `SUMMARY:${title}`,
       `DESCRIPTION:${desc}`,
-      "LOCATION:118 Pine Street, Seattle, WA 98101",
-      `DTSTART:${dateKey.replace(/-/g, "")}T120000Z`,
-      `DTEND:${dateKey.replace(/-/g, "")}T140000Z`,
+      `LOCATION:${settings.address}`,
+      `DTSTART:${dtStart}`,
+      `DTEND:${dtEnd}`,
       "STATUS:CONFIRMED",
       "END:VEVENT",
       "END:VCALENDAR",
@@ -432,18 +462,28 @@ export default function Booking() {
               </div>
             </div>
             <div className="date-options">
-              {dates.map((date) => (
-                <button
-                  key={date.value}
-                  className={dateKey === date.value ? "date-option selected" : "date-option"}
-                  aria-pressed={dateKey === date.value}
-                  onClick={() => selectDate(date.value)}
-                >
-                  <span>{date.day}</span>
-                  <b>{date.number}</b>
-                  <small>{date.month}</small>
-                </button>
-              ))}
+              {dates.map((date) => {
+                const isBlackout = settings.blackoutDates.includes(date.value);
+                return (
+                  <button
+                    key={date.value}
+                    className={`${dateKey === date.value ? "date-option selected" : "date-option"} ${isBlackout ? "opacity-60 border-dashed" : ""}`}
+                    aria-pressed={dateKey === date.value}
+                    onClick={() => {
+                      if (isBlackout) {
+                        toast.info("Studio closure / holiday on this date.", {
+                          description: "Choose another date to view openings.",
+                        });
+                      }
+                      selectDate(date.value);
+                    }}
+                  >
+                    <span>{date.day}</span>
+                    <b>{date.number}</b>
+                    <small>{isBlackout ? "Closed" : date.month}</small>
+                  </button>
+                );
+              })}
             </div>
             {dateKey && (
               <div className="time-slots">

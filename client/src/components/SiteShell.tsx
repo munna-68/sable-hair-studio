@@ -80,18 +80,17 @@ function NewsletterForm() {
   );
 }
 
-/** Live open/closed pill, computed from the studio's printed hours. */
+/** Live open/closed pill, computed from the studio's operating hours and settings. */
 export function StudioStatus({ className }: { className?: string }) {
   const { settings } = useStudio();
-  const baseStatus = getStudioStatus();
-  const isOpen = settings.isOpenToday && baseStatus.open;
+  const status = getStudioStatus(new Date(), settings.operatingHours, settings.isOpenToday);
 
   return (
     <span className={className ? `status-pill ${className}` : "status-pill"}>
-      <span className={isOpen ? "status-dot" : "status-dot closed"} aria-hidden="true" />
+      <span className={status.open ? "status-dot" : "status-dot closed"} aria-hidden="true" />
       <span>
-        <b>{isOpen ? "Open today" : "Studio closed"}</b>
-        <small>{isOpen ? baseStatus.detail : "Appointments via calendar"}</small>
+        <b>{status.open ? "Open today" : "Studio closed"}</b>
+        <small>{status.open ? status.detail : "Appointments via calendar"}</small>
       </span>
     </span>
   );
@@ -256,7 +255,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         <div className="footer-grid">
           <div>
             <BrandMark />
-            <p className="footer-intro">Thoughtful cuts, lived-in color, and the kind of appointment plan that respects your calendar.</p>
+            <p className="footer-intro">{settings.tagline || "Thoughtful cuts, lived-in color, and the kind of appointment plan that respects your calendar."}</p>
             <StudioStatus className="footer-status" />
             <div className="newsletter-block">
               <p className="footer-label">The Sable note — monthly</p>
@@ -266,12 +265,16 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </div>
           <div className="footer-column">
             <p className="footer-label">Find us</p>
-            <a href="https://maps.google.com/?q=118+Pine+Street+Seattle+WA" target="_blank" rel="noreferrer"><MapPin size={15} /> 118 Pine Street<br />Seattle, WA 98101</a>
+            <a href={settings.mapsUrl} target="_blank" rel="noreferrer"><MapPin size={15} /> {settings.address}</a>
             <Link href="/visit">Hours, map & contact</Link>
           </div>
           <div className="footer-column">
             <p className="footer-label">Hours</p>
-            <p>Tue–Fri 9–6<br />Sat–Sun 10–5</p>
+            <p>
+              {settings.operatingHours.find((h) => h.day === "Tuesday")?.closed ? "Tue Closed" : "Tue–Fri 9–6"}
+              <br />
+              {settings.operatingHours.find((h) => h.day === "Saturday")?.closed ? "Weekend Closed" : "Sat–Sun 10–5"}
+            </p>
             <Link href="/book">Book a visit</Link>
           </div>
           <div className="footer-column">

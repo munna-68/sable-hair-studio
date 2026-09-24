@@ -204,9 +204,21 @@ export function getService(id?: string) {
   return services.find((service) => service.id === id);
 }
 
-export function getCompatibleStylists(serviceId?: string) {
+export function getCompatibleStylists(serviceId?: string, customService?: Service) {
   if (!serviceId) return [];
-  return stylists.filter((stylist) => stylist.serviceIds.includes(serviceId));
+  const directMatches = stylists.filter((stylist) => stylist.serviceIds.includes(serviceId));
+  if (directMatches.length > 0) return directMatches;
+
+  // For custom or newly added services, match based on category
+  const targetCategory = customService?.category || getService(serviceId)?.category;
+  if (targetCategory === "Color") {
+    return stylists.filter((s) => s.id === "mara" || s.id === "sofia" || s.id === "noa");
+  }
+  if (targetCategory === "Grooming") {
+    return stylists.filter((s) => s.id === "eli" || s.id === "noa");
+  }
+  // Cut or Care or unassigned
+  return stylists;
 }
 
 export function getDepositAmount(service?: Service) {
@@ -249,27 +261,82 @@ function dateFromKey(key: string) {
   return new Date(`${key}T12:00:00`);
 }
 
-function formatTime(minutes: number) {
+export function parseTimeToMinutes(timeSlot: string): number {
+  const match = timeSlot.match(/^0?(\d+):(\d+)\s*(AM|PM)$/i);
+  if (!match) return -1;
+  let hour = parseInt(match[1], 10);
+  const minute = parseInt(match[2], 10);
+  const isPM = match[3].toUpperCase() === "PM";
+  if (isPM && hour < 12) hour += 12;
+  if (!isPM && hour === 12) hour = 0;
+  return hour * 60 + minute;
+}
+
+export function formatTime(minutes: number) {
   const hour = Math.floor(minutes / 60);
   const minute = minutes % 60;
   const suffix = hour >= 12 ? "PM" : "AM";
   const displayHour = hour % 12 || 12;
-  return `${displayHour}:${String(minute).padStart(2, "0")} ${suffix}`;
+  return `${String(displayHour).padStart(2, "0")}:${String(minute).padStart(2, "0")} ${suffix}`;
 }
 
-export function getAvailableSlots(stylistId?: string, serviceId?: string, dateKey?: string) {
+export interface SlotCheckOptions {
+  existingAppointments?: { stylistId: string; dateKey: string; timeSlot: string; duration: number; status: string }[];
+  blackoutDates?: string[];
+  operatingHours?: { day: string; shortDay: string; open: string; close: string; closed: boolean }[];
+  serviceObj?: Service;
+}
+
+export function getAvailableSlots(
+  stylistId?: string,
+  serviceId?: string,
+  dateKey?: string,
+  options?: SlotCheckOptions
+) {
   const stylist = stylists.find((item) => item.id === stylistId);
-  const service = getService(serviceId);
+  const service = options?.serviceObj || getService(serviceId);
   if (!stylist || !service || !dateKey) return [];
+
+  // Blackout date check
+  if (options?.blackoutDates?.includes(dateKey)) return [];
 
   const weekday = dateFromKey(dateKey).getDay();
   if (!stylist.weeklyHours.includes(weekday)) return [];
 
-  const dayStart = 540;
-  const dayEnd = 1080;
-  const blocked = scheduleBlocks[stylist.id] ?? [];
+  let dayStart = 540;
+  let dayEnd = 1080;
 
-  return Array.from({ length: 19 }, (_, index) => dayStart + index * 30)
+  if (options?.operatingHours && options.operatingHours[weekday]) {
+    const dayConfig = options.operatingHours[weekday];
+    if (dayConfig.closed) return [];
+    const openMin = parseTimeToMinutes(dayConfig.open);
+    const closeMin = parseTimeToMinutes(dayConfig.close);
+    if (openMin > 0 && closeMin > openMin) {
+      dayStart = openMin;
+      dayEnd = closeMin;
+    }
+  }
+
+  const blocked = [...(scheduleBlocks[stylist.id] ?? [])];
+
+  // Dynamic booking conflict filter
+  if (options?.existingAppointments) {
+    options.existingAppointments
+      .filter((apt) => apt.stylistId === stylistId && apt.dateKey === dateKey && apt.status !== "cancelled")
+      .forEach((apt) => {
+        const start = parseTimeToMinutes(apt.timeSlot);
+        if (start >= 0) {
+          blocked.push({
+            weekday,
+            start,
+            length: apt.duration,
+          });
+        }
+      });
+  }
+
+  const slotsCount = Math.floor((dayEnd - dayStart) / 30);
+  return Array.from({ length: Math.max(0, slotsCount) }, (_, index) => dayStart + index * 30)
     .filter((start) => start + service.duration <= dayEnd)
     .filter(
       (start) =>

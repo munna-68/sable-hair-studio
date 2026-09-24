@@ -32,7 +32,7 @@ export function PressStrip() {
 }
 
 export function RetailGrid({ compact = false }: { compact?: boolean }) {
-  const { addToBag, toggleSavedProduct, isSavedProduct } = useStudio();
+  const { retailProducts, addToBag, toggleSavedProduct, isSavedProduct } = useStudio();
   const list = compact ? retailProducts.slice(0, 3) : retailProducts;
   return (
     <div className="retail-grid">
