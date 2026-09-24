@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { StudioMap } from "@/components/StudioMap";
 import { PageEyebrow, SiteShell, StudioStatus } from "@/components/SiteShell";
 import { getStudioStatus } from "@/hooks/useScrollMotion";
+import { useStudio } from "@/contexts/StudioStore";
 
 const ADDRESS = "118 Pine Street, Seattle, WA 98101";
 const MAPS_URL = "https://maps.google.com/?q=118+Pine+Street+Seattle+WA";
@@ -21,6 +22,7 @@ type FormState = { name: string; email: string; topic: string; message: string }
 const initial: FormState = { name: "", email: "", topic: "Booking help", message: "" };
 
 export default function Visit() {
+  const { addInquiry } = useStudio();
   const [form, setForm] = useState<FormState>(initial);
   const [errors, setErrors] = useState<Partial<FormState>>({});
   const [sending, setSending] = useState(false);
@@ -58,12 +60,19 @@ export default function Visit() {
     }
     setSending(true);
     window.setTimeout(() => {
+      addInquiry({
+        name: form.name.trim(),
+        email: form.email.trim(),
+        topic: form.topic,
+        message: form.message.trim(),
+        status: "new",
+      });
       setSending(false);
       setSent(true);
-      toast.success(`Thanks, ${form.name.trim().split(" ")[0]} — message saved (demo).`, {
-        description: "We reply Tue–Sun during studio hours. Nothing was sent to a server.",
+      toast.success(`Thanks, ${form.name.trim().split(" ")[0]} — message saved!`, {
+        description: "Synced directly to the Owner Dashboard Inquiries queue.",
       });
-    }, 800);
+    }, 600);
   }
 
   return (
@@ -114,11 +123,14 @@ export default function Visit() {
           <form className="visit-form" onSubmit={submit} noValidate data-reveal="up">
             {sent ? (
               <div className="bag-confirm">
-                <p className="service-category">Message saved</p>
-                <b>Thanks — we’ll reply during studio hours.</b>
-                <span>This demo stores nothing on a server. Want to lock a time now?</span>
-                <div className="flex gap-2 flex-wrap">
+                <p className="service-category">Message saved & synced</p>
+                <b>Thanks — your inquiry is logged in the studio queue.</b>
+                <span>We reply Tue–Sun during studio hours. Want to lock an appointment now?</span>
+                <div className="flex gap-2 flex-wrap pt-1">
                   <Link href="/book" className="primary-cta !py-2.5">Build your visit <ArrowUpRight size={14} /></Link>
+                  <Link href="/dashboard/inquiries" className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-[#147A45]/15 text-[#147A45] font-medium text-xs hover:bg-[#147A45]/25 transition-colors">
+                    View in Owner Dashboard <ArrowUpRight size={13} />
+                  </Link>
                   <button type="button" className="ghost-cta" onClick={() => { setSent(false); setForm(initial); }}>Send another</button>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 import { withBase } from "@/lib/withBase";
 /** Chromatic Cut shell: editorial runway chrome with mock commerce actions. */
 import { Link, useLocation } from "wouter";
-import { ArrowUpRight, Heart, Instagram, MapPin, Menu, Search, ShoppingBag, Sparkles, UserRound, X } from "lucide-react";
+import { ArrowUpRight, Heart, Instagram, LayoutDashboard, MapPin, Menu, Search, ShoppingBag, Sparkles, UserRound, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
@@ -42,6 +42,7 @@ export function BrandMark({ compact = false }: { compact?: boolean }) {
 }
 
 function NewsletterForm() {
+  const { addSubscriber } = useStudio();
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(isNewsletterSubscribed());
 
@@ -52,10 +53,11 @@ function NewsletterForm() {
       toast.error("Enter a valid email to join the list.", { description: "Example: you@example.com" });
       return;
     }
+    addSubscriber(value);
     markNewsletterSubscribed();
     setDone(true);
     setEmail("");
-    toast.success("You’re on the Sable list.", { description: "One thoughtful email a month. No noise — demo only." });
+    toast.success("You’re on the Sable list.", { description: "Saved to subscriber roster in the Owner Dashboard." });
   }
 
   if (done) {
@@ -80,13 +82,16 @@ function NewsletterForm() {
 
 /** Live open/closed pill, computed from the studio's printed hours. */
 export function StudioStatus({ className }: { className?: string }) {
-  const status = getStudioStatus();
+  const { settings } = useStudio();
+  const baseStatus = getStudioStatus();
+  const isOpen = settings.isOpenToday && baseStatus.open;
+
   return (
     <span className={className ? `status-pill ${className}` : "status-pill"}>
-      <span className={status.open ? "status-dot" : "status-dot closed"} aria-hidden="true" />
+      <span className={isOpen ? "status-dot" : "status-dot closed"} aria-hidden="true" />
       <span>
-        <b>{status.label}</b>
-        <small>{status.detail}</small>
+        <b>{isOpen ? "Open today" : "Studio closed"}</b>
+        <small>{isOpen ? baseStatus.detail : "Appointments via calendar"}</small>
       </span>
     </span>
   );
@@ -95,7 +100,7 @@ export function StudioStatus({ className }: { className?: string }) {
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
-  const { cartCount, savedCount, setCartOpen, setSavedOpen, setPaletteOpen, matcherOpen, setMatcherOpen } = useStudio();
+  const { cartCount, savedCount, setCartOpen, setSavedOpen, setPaletteOpen, matcherOpen, setMatcherOpen, settings } = useStudio();
   const activePath = location.split("?")[0];
 
   useMotionSystem();
@@ -120,6 +125,12 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-[#F5F8F4] text-[#0A1F14]">
+      {settings.announcementBanner.enabled && (
+        <aside aria-label="Studio announcement" className="bg-[#0A1F14] text-[#E6EFE9] text-xs py-2 px-4 text-center font-medium tracking-wide flex items-center justify-center gap-2 border-b border-[#147A45]/30">
+          <Sparkles size={13} className="text-[#34D399]" />
+          <span>{settings.announcementBanner.message}</span>
+        </aside>
+      )}
       <ScrollProgress />
       <header className="site-header">
         <div className="header-inner">
@@ -154,20 +165,34 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                   <UserRound size={18} />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-60">
-                <DropdownMenuLabel>Demo account</DropdownMenuLabel>
+              <DropdownMenuContent align="end" className="w-64">
+                <DropdownMenuLabel className="flex items-center justify-between">
+                  <span>Demo account</span>
+                  <span className="text-[10px] bg-[#147A45]/15 text-[#147A45] font-mono px-2 py-0.5 rounded-full font-bold">PORTFOLIO</span>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/dashboard" className="flex items-center justify-between text-[#147A45] font-semibold cursor-pointer">
+                    <span className="flex items-center gap-2"><LayoutDashboard size={15} /> Owner Dashboard</span>
+                    <span className="text-[10px] bg-[#147A45] text-white px-1.5 py-0.5 rounded">PORTAL</span>
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => toast.info("Sign-in is mocked in this showcase.", { description: "No account needed to explore booking." })}>
                   Sign in (demo)
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => toast.success("Visit history synced — demo.", { description: "2 past cuts · 1 color plan on file." })}>
-                  Past visits
+                <DropdownMenuItem asChild>
+                  <Link href="/dashboard/appointments" className="cursor-pointer">
+                    All client appointments
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => { setSavedOpen(true); }}>
                   Saved looks & chairs
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => toast.info("Preferences saved locally.", { description: "Low-scent products · Saturday mornings." })}>
-                  Preferences
+                <DropdownMenuItem asChild>
+                  <Link href="/dashboard/settings" className="cursor-pointer">
+                    Studio operating settings
+                  </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -216,6 +241,13 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             <Link href="/book" className="mobile-book-link" onClick={() => setMenuOpen(false)}>
               Book a visit <ArrowUpRight size={16} />
             </Link>
+            <Link
+              href="/dashboard"
+              className="mobile-chrome-btn flex items-center justify-center gap-2 text-[#147A45] font-semibold border border-[#147A45]/30 bg-[#147A45]/10 mt-1 !py-3 rounded-full"
+              onClick={() => setMenuOpen(false)}
+            >
+              <LayoutDashboard size={16} /> Studio Owner Dashboard
+            </Link>
           </nav>
         )}
       </header>
@@ -243,10 +275,17 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             <Link href="/book">Book a visit</Link>
           </div>
           <div className="footer-column">
-            <p className="footer-label">Say hello</p>
-            <a href="mailto:hello@sablestudio.example">hello@sablestudio.example</a>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer"><Instagram size={15} /> @sablehairstudio</a>
-            <button className="footer-match-link" onClick={() => setMatcherOpen(true)}>
+            <p className="footer-label">Studio Portal</p>
+            <Link href="/dashboard" className="text-[#34D399] font-medium flex items-center gap-1.5 hover:underline text-sm">
+              <LayoutDashboard size={14} /> Owner Dashboard
+            </Link>
+            <Link href="/dashboard/appointments" className="text-xs text-[#9BB3A2] hover:text-white">
+              Appointments & orders
+            </Link>
+            <Link href="/dashboard/settings" className="text-xs text-[#9BB3A2] hover:text-white">
+              Hours & policies
+            </Link>
+            <button className="footer-match-link mt-2" onClick={() => setMatcherOpen(true)}>
               <Sparkles size={13} /> Find your service
             </button>
           </div>

@@ -5,7 +5,7 @@ import { ArrowUpRight, Clock3, Droplets, Eye, Heart, Search, Share2, ShieldCheck
 import { PageEyebrow, SiteShell } from "@/components/SiteShell";
 import { ServiceQuickView } from "@/components/ServiceQuickView";
 import { RetailGrid } from "@/components/ShowcaseBits";
-import { getCancellationWindow, getCompatibleStylists, getDepositAmount, services, type Service } from "@/lib/salon-data";
+import { getCancellationWindow, getCompatibleStylists, getDepositAmount, type Service } from "@/lib/salon-data";
 import { shareLink, useStudio } from "@/contexts/StudioStore";
 
 const categoryIcons = { Cut: Sparkles, Color: Droplets, Care: ShieldCheck, Grooming: Clock3 };
@@ -14,7 +14,7 @@ const categories = ["All", "Cut", "Color", "Care", "Grooming"] as const;
 export default function Services() {
   const [, setLocation] = useLocation();
   const focusId = new URLSearchParams(window.location.search).get("focus") ?? "";
-  const { addToBag, toggleSavedService, isSavedService, setMatcherOpen } = useStudio();
+  const { services, addToBag, toggleSavedService, isSavedService, setMatcherOpen } = useStudio();
   const [category, setCategory] = useState<(typeof categories)[number]>("All");
   const [query, setQuery] = useState("");
   const [quickView, setQuickView] = useState<Service | null>(() => services.find((s) => s.id === focusId) ?? null);

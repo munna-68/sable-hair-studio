@@ -21,6 +21,15 @@ const pages = [
   { href: "/memberships", label: "Memberships — rhythms", hint: "3 plans" },
   { href: "/about", label: "About — chairs & studio", hint: "4 stylists" },
   { href: "/visit", label: "Visit — map, hours & contact", hint: "118 Pine St" },
+  { href: "/dashboard", label: "Owner Dashboard — Today's chair pass", hint: "Portal" },
+  { href: "/dashboard/appointments", label: "Appointments & Orders — Queue", hint: "Portal" },
+  { href: "/dashboard/roster", label: "Chair Roster — Stylist timeline", hint: "Portal" },
+  { href: "/dashboard/services", label: "Services & Shelf — Catalog manager", hint: "Portal" },
+  { href: "/dashboard/inquiries", label: "Inquiries & Consultations — Messages", hint: "Portal" },
+  { href: "/dashboard/clients", label: "Clientele Directory — Formulas & notes", hint: "Portal" },
+  { href: "/dashboard/insights", label: "Studio Analytics & Velocity", hint: "Portal" },
+  { href: "/dashboard/financials", label: "Financials & Settlements — Ledger", hint: "Portal" },
+  { href: "/dashboard/settings", label: "Studio Settings — Hours & policies", hint: "Portal" },
 ];
 
 export function CommandPalette() {
