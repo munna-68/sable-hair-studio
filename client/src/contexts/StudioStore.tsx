@@ -171,7 +171,7 @@ export interface StudioStoreContextType {
   deleteRetailProduct: (id: string) => void;
 
   // Operations: Clients
-  addClient: (data: Omit<SalonClient, "id" | "totalVisits" | "totalSpend" | "formulas" | "lastVisitDate">) => SalonClient;
+  addClient: (data: Omit<SalonClient, "id" | "totalVisits" | "totalSpend" | "formulas" | "lastVisitDate" | "initials">) => SalonClient;
   updateClient: (id: string, patch: Partial<SalonClient>) => void;
   addClientFormula: (clientId: string, formula: string, stylist: string) => void;
 
@@ -559,7 +559,7 @@ export function StudioProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   // Client actions
-  const addClient = useCallback((data: Omit<SalonClient, "id" | "totalVisits" | "totalSpend" | "formulas" | "lastVisitDate">): SalonClient => {
+  const addClient = useCallback((data: Omit<SalonClient, "id" | "totalVisits" | "totalSpend" | "formulas" | "lastVisitDate" | "initials">): SalonClient => {
     const id = `cli-${Date.now()}`;
     const initials = data.name
       .split(" ")
